@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{88313818-71ED-453A-888B-798E94F795CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theatre.Api", "src\Theatre.Api\Theatre.Api.csproj", "{157FC3B6-62D6-457B-B9B7-259635D8B768}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theatre.Application", "src\Theatre.Application\Theatre.Application.csproj", "{070F9AD8-84F6-47F2-93C4-9685A8550AB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theatre.Domain", "src\Theatre.Domain\Theatre.Domain.csproj", "{ECAF7B7F-C9BA-4523-84CF-1BF12E909526}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theatre.Infrastructure", "src\Theatre.Infrastructure\Theatre.Infrastructure.csproj", "{959797C1-F4C9-44E5-B9C1-9D0750769E49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theatre.Contracts", "src\Theatre.Contracts\Theatre.Contracts.csproj", "{F5D24B7F-6038-4070-B764-2703357669D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{157FC3B6-62D6-457B-B9B7-259635D8B768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{157FC3B6-62D6-457B-B9B7-259635D8B768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{157FC3B6-62D6-457B-B9B7-259635D8B768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{157FC3B6-62D6-457B-B9B7-259635D8B768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{070F9AD8-84F6-47F2-93C4-9685A8550AB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{070F9AD8-84F6-47F2-93C4-9685A8550AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{070F9AD8-84F6-47F2-93C4-9685A8550AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{070F9AD8-84F6-47F2-93C4-9685A8550AB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECAF7B7F-C9BA-4523-84CF-1BF12E909526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECAF7B7F-C9BA-4523-84CF-1BF12E909526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECAF7B7F-C9BA-4523-84CF-1BF12E909526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECAF7B7F-C9BA-4523-84CF-1BF12E909526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{959797C1-F4C9-44E5-B9C1-9D0750769E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{959797C1-F4C9-44E5-B9C1-9D0750769E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{959797C1-F4C9-44E5-B9C1-9D0750769E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{959797C1-F4C9-44E5-B9C1-9D0750769E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5D24B7F-6038-4070-B764-2703357669D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5D24B7F-6038-4070-B764-2703357669D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5D24B7F-6038-4070-B764-2703357669D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5D24B7F-6038-4070-B764-2703357669D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{157FC3B6-62D6-457B-B9B7-259635D8B768} = {88313818-71ED-453A-888B-798E94F795CD}
+		{070F9AD8-84F6-47F2-93C4-9685A8550AB6} = {88313818-71ED-453A-888B-798E94F795CD}
+		{ECAF7B7F-C9BA-4523-84CF-1BF12E909526} = {88313818-71ED-453A-888B-798E94F795CD}
+		{959797C1-F4C9-44E5-B9C1-9D0750769E49} = {88313818-71ED-453A-888B-798E94F795CD}
+		{F5D24B7F-6038-4070-B764-2703357669D9} = {88313818-71ED-453A-888B-798E94F795CD}
+	EndGlobalSection
+EndGlobal
