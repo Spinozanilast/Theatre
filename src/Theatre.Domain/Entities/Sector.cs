@@ -11,9 +11,9 @@ public class Sector : AutoIncrementedEntity<short>
         SeatsNum = seatsNum;
     }
     
-    public short HallId { get; set; }
-    public short RowsCount { get; set; }
-    public short SeatsNum { get; set; }
+    public short HallId { get; private set; }
+    public short RowsCount { get; private set; }
+    public short SeatsNum { get; private set; }
     
     public void Update(short hallId, short rowsCount, short seatsNum)
     {

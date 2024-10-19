@@ -20,12 +20,12 @@ public class Event : Entity
     }
 
     public string Name { get; private set; }
-    public EventType EventType { get; private set; }
-    public DateTime DateTime { get; private set; }
-    public short HallId { get; private set; }
     public string Description { get; private set; }
-    public EventCast EventCast { get; private set; }
+    public DateTime DateTime { get; private set; }
+    public EventType EventType { get; private set; }
+    public short HallId { get; private set; }
     public decimal Price { get; private set; }
+    public EventCast EventCast { get; private set; }
     public bool EventState { get; private set; }
 
     public void Update(string name, string description, DateTime dateTime, short hallId, decimal price,
