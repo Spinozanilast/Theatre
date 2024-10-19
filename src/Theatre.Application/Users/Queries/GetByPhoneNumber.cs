@@ -7,18 +7,12 @@ namespace Theatre.Application.Users.Queries;
 
 public record GetByPhoneNumber(string PhoneNumber) : IRequest<ErrorOr<User>>;
 
-public class GetByPhoneNumberQueryHandler : IRequestHandler<GetByPhoneNumber, ErrorOr<User>>
+public class GetByPhoneNumberQueryHandler(IUsersRepository usersRepository)
+    : IRequestHandler<GetByPhoneNumber, ErrorOr<User>>
 {
-    private readonly IUsersRepository _usersRepository;
-
-    public GetByPhoneNumberQueryHandler(IUsersRepository usersRepository)
-    {
-        _usersRepository = usersRepository;
-    }
-
     public async Task<ErrorOr<User>> Handle(GetByPhoneNumber request, CancellationToken cancellationToken)
     {
-        var user = await _usersRepository.GetByPhoneNumberAsync(request.PhoneNumber, cancellationToken);
+        var user = await usersRepository.GetByPhoneNumberAsync(request.PhoneNumber, cancellationToken);
 
         if (user is null)
         {

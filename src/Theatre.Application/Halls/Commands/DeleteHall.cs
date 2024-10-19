@@ -6,17 +6,10 @@ namespace Theatre.Application.Halls.Commands;
 
 public record DeleteHallCommand(short HallId) : IRequest;
 
-public class DeleteHall : IRequestHandler<DeleteHallCommand>
+public class DeleteHall(IHallsRepository hallsRepository) : IRequestHandler<DeleteHallCommand>
 {
-    private readonly IHallsRepository _hallsRepository;
-
-    public DeleteHall(IHallsRepository hallsRepository)
-    {
-        _hallsRepository = hallsRepository;
-    }
-
     public async Task Handle(DeleteHallCommand request, CancellationToken cancellationToken)
     {
-        await _hallsRepository.DeleteAsync(request.HallId);
+        await hallsRepository.DeleteAsync(request.HallId);
     }
 }

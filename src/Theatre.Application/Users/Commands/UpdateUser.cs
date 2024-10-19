@@ -11,18 +11,16 @@ public record UpdateUserCommand(User UpdatedUser)
 public class UpdateUserCommandHandler(IUsersRepository usersRepository)
     : IRequestHandler<UpdateUserCommand, ErrorOr<Success>>
 {
-    private readonly IUsersRepository _usersRepository = usersRepository;
-
     public async Task<ErrorOr<Success>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _usersRepository.GetByIdAsync(request.UpdatedUser.Id, cancellationToken);
+        var user = await usersRepository.GetByIdAsync(request.UpdatedUser.Id, cancellationToken);
 
         if (user is not null)
         {
             return Error.NotFound(description: "User not found");
         }
 
-        await _usersRepository.UpdateAsync(request.UpdatedUser, cancellationToken);
+        await usersRepository.UpdateAsync(request.UpdatedUser, cancellationToken);
 
         return Result.Success;
     }

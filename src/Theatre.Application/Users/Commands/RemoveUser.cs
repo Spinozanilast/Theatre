@@ -6,17 +6,10 @@ namespace Theatre.Application.Users.Commands;
 
 public record RemoveUserCommand(Guid Id) : IRequest;
 
-public class RemoveUserCommandHandler : IRequestHandler<RemoveUserCommand>
+public class RemoveUserCommandHandler(IUsersRepository usersRepository) : IRequestHandler<RemoveUserCommand>
 {
-    private readonly IUsersRepository _usersRepository;
-
-    public RemoveUserCommandHandler(IUsersRepository usersRepository)
-    {
-        _usersRepository = usersRepository;
-    }
-
     public async Task Handle(RemoveUserCommand request, CancellationToken cancellationToken)
     {
-        await _usersRepository.RemoveAsync(request.Id, cancellationToken);
+        await usersRepository.RemoveAsync(request.Id, cancellationToken);
     }
 }

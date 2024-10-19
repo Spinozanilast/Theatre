@@ -6,17 +6,10 @@ namespace Theatre.Application.Sectors.Commands;
 
 public record DeleteSectorCommand(short SectorId) : IRequest;
 
-public class DeleteSectorCommandHandler : IRequestHandler<DeleteSectorCommand>
+public class DeleteSectorCommandHandler(ISectorsRepository sectorsRepository) : IRequestHandler<DeleteSectorCommand>
 {
-    private readonly ISectorsRepository _sectorsRepository;
-
-    public DeleteSectorCommandHandler(ISectorsRepository sectorsRepository)
-    {
-        _sectorsRepository = sectorsRepository;
-    }
-
     public async Task Handle(DeleteSectorCommand request, CancellationToken cancellationToken)
     {
-        await _sectorsRepository.DeleteAsync(request.SectorId);
+        await sectorsRepository.DeleteAsync(request.SectorId);
     }
 }

@@ -7,19 +7,13 @@ namespace Theatre.Application.Halls.Commands;
 
 public record CreateHallCommand(int SeatsNum, string HallName) : IRequest<ErrorOr<Success>>;
 
-public class CreateHallCommandHandler : IRequestHandler<CreateHallCommand, ErrorOr<Success>>
+public class CreateHallCommandHandler(IHallsRepository hallsRepository)
+    : IRequestHandler<CreateHallCommand, ErrorOr<Success>>
 {
-    private readonly IHallsRepository _hallsRepository;
-
-    public CreateHallCommandHandler(IHallsRepository hallsRepository)
-    {
-        _hallsRepository = hallsRepository;
-    }
-
     public async Task<ErrorOr<Success>> Handle(CreateHallCommand request, CancellationToken cancellationToken)
     {
         var hall = new Hall(request.SeatsNum, request.HallName);
-        await _hallsRepository.CreateAsync(hall);
+        await hallsRepository.CreateAsync(hall);
         return Result.Success;
     }
 }

@@ -6,17 +6,11 @@ namespace Theatre.Application.Sectors.Queries;
 
 public record GetSectorsByHallIdCommand(short HallId) : IRequest<IList<Sector>>;
 
-public class GetSectorsByHallIdCommandHandler : IRequestHandler<GetSectorsByHallIdCommand, IList<Sector>>
+public class GetSectorsByHallIdCommandHandler(ISectorsRepository sectorsRepository)
+    : IRequestHandler<GetSectorsByHallIdCommand, IList<Sector>>
 {
-    private readonly ISectorsRepository _sectorsRepository;
-
-    public GetSectorsByHallIdCommandHandler(ISectorsRepository sectorsRepository)
-    {
-        _sectorsRepository = sectorsRepository;
-    }
-
     public async Task<IList<Sector>> Handle(GetSectorsByHallIdCommand request, CancellationToken cancellationToken)
     {
-        return await _sectorsRepository.GetSectorsByHallId(request.HallId);
+        return await sectorsRepository.GetSectorsByHallId(request.HallId);
     }
 }

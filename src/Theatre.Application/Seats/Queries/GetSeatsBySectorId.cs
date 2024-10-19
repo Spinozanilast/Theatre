@@ -7,17 +7,11 @@ namespace Theatre.Application.Seats.Queries;
 
 public record GetSeatsBySectorIdCommand(short SectorId) : IRequest<IList<Seat>>;
 
-public class GetSeatsBySectorIdCommandHandler : IRequestHandler<GetSeatsBySectorIdCommand, IList<Seat>>
+public class GetSeatsBySectorIdCommandHandler(ISeatsRepository seatsRepository)
+    : IRequestHandler<GetSeatsBySectorIdCommand, IList<Seat>>
 {
-    private readonly ISeatsRepository _seatsRepository;
-
-    public GetSeatsBySectorIdCommandHandler(ISeatsRepository seatsRepository)
-    {
-        _seatsRepository = seatsRepository;
-    }
-
     public async Task<IList<Seat>> Handle(GetSeatsBySectorIdCommand request, CancellationToken cancellationToken)
     {
-        return await _seatsRepository.GetSeatsBySectorIdAsync(request.SectorId);
+        return await seatsRepository.GetSeatsBySectorIdAsync(request.SectorId);
     }
 }
