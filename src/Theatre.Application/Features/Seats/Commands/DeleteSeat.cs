@@ -1,14 +1,13 @@
 ﻿using ErrorOr;
-using MediatR;
+
+using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
 
 namespace Theatre.Application.Features.Seats.Commands;
 
-public record DeleteSeatCommand(int Id)
-    : IRequest<ErrorOr<Success>>;
-
+public record DeleteSeatCommand(int Id);
 public class DeleteSeatCommandHandler(ISeatsRepository seatsRepository)
-    : IRequestHandler<DeleteSeatCommand, ErrorOr<Success>>
+    : ICommandHandler<DeleteSeatCommand, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handle(DeleteSeatCommand request, CancellationToken cancellationToken)
     {

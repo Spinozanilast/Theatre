@@ -5,7 +5,7 @@ using Theatre.Infrastructure.Data;
 
 namespace Theatre.Infrastructure.Repositories;
 
-public class UserRepository(TheatreDbContext dbContext) : IUsersRepository
+public class UsersRepository(TheatreDbContext dbContext) : IUsersRepository
 {
     private readonly TheatreDbContext _dbContext = dbContext;
 

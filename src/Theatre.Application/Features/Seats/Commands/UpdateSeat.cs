@@ -1,15 +1,14 @@
 ﻿using ErrorOr;
-using MediatR;
+
+using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities.Enums;
 
 namespace Theatre.Application.Features.Seats.Commands;
 
-public record UpdateSeatCommand(short Id, short HallId, short SectorId, short Row, short Number, SeatType SeatType)
-    : IRequest<ErrorOr<Success>>;
-
+public record UpdateSeatCommand(short Id, short HallId, short SectorId, short Row, short Number, SeatType SeatType);
 public class UpdateSeatCommandHandler(ISeatsRepository seatsRepository)
-    : IRequestHandler<UpdateSeatCommand, ErrorOr<Success>>
+    : ICommandHandler<UpdateSeatCommand, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handle(UpdateSeatCommand request, CancellationToken cancellationToken)
     {

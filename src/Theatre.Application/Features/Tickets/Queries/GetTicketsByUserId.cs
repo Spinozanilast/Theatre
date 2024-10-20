@@ -1,13 +1,13 @@
-﻿using MediatR;
+﻿using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Tickets.Queries;
 
-public record GetTicketsByUserIdQuery(Guid UserId) : IRequest<IList<Ticket>>;
+public record GetTicketsByUserIdQuery(Guid UserId);
 
 public class GetTicketsByUserIdQueryHandler(ITicketsRepository ticketsRepository)
-    : IRequestHandler<GetTicketsByUserIdQuery, IList<Ticket>>
+    : IQueryHandler<GetTicketsByUserIdQuery, IList<Ticket>>
 {
     public async Task<IList<Ticket>> Handle(GetTicketsByUserIdQuery request, CancellationToken cancellationToken)
     {

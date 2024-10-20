@@ -1,5 +1,5 @@
 ﻿using ErrorOr;
-using MediatR;
+using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities;
 using Theatre.Domain.Entities.Enums;
@@ -14,14 +14,13 @@ public record CreateEventCommand(
     short HallId,
     decimal Price,
     EventType EventType,
-    EventCast EventCast)
-    : IRequest<ErrorOr<Success>>;
+    EventCast EventCast);
 
 public class CreateEventCommandHandler(
     IEventsRepository eventsRepository,
     IHallsRepository hallsRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<CreateEventCommand, ErrorOr<Success>>
+    : ICommandHandler<CreateEventCommand, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handle(CreateEventCommand command, CancellationToken cancellationToken)
     {

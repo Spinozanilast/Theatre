@@ -1,14 +1,15 @@
 ﻿using ErrorOr;
-using MediatR;
+
+using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Halls.Commands;
 
-public record CreateHallCommand(int SeatsNum, string HallName) : IRequest<ErrorOr<Success>>;
+public record CreateHallCommand(int SeatsNum, string HallName);
 
 public class CreateHallCommandHandler(IHallsRepository hallsRepository)
-    : IRequestHandler<CreateHallCommand, ErrorOr<Success>>
+    : ICommandHandler<CreateHallCommand, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handle(CreateHallCommand request, CancellationToken cancellationToken)
     {

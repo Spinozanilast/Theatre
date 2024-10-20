@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
-using MediatR;
+using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
-using Theatre.Domain.Entities;
 using Theatre.Domain.Entities.Enums;
 using Theatre.Domain.Entities.Special;
 
@@ -17,13 +16,12 @@ public record UpdateEventCommand(
     EventCast EventCast,
     decimal Price,
     bool EventState
-)
-    : IRequest<ErrorOr<Success>>;
+);
 
 public class UpdateEventCommandHandler(
     IEventsRepository eventsRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<UpdateEventCommand, ErrorOr<Success>>
+    : ICommandHandler<UpdateEventCommand, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handle(UpdateEventCommand command, CancellationToken cancellationToken)
     {

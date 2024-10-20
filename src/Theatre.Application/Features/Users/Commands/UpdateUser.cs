@@ -1,15 +1,14 @@
 ﻿using ErrorOr;
-using MediatR;
+using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Users.Commands;
 
-public record UpdateUserCommand(User UpdatedUser)
-    : IRequest<ErrorOr<Success>>;
+public record UpdateUserCommand(User UpdatedUser);
 
 public class UpdateUserCommandHandler(IUsersRepository usersRepository)
-    : IRequestHandler<UpdateUserCommand, ErrorOr<Success>>
+    : ICommandHandler<UpdateUserCommand, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {

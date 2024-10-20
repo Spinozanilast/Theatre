@@ -36,5 +36,13 @@ public class Ticket : Entity, IUniqueSeatIndex<short>
     public void Update(Guid eventId, Guid userId, DateTime endsAt, short hallId, short sectorId, short rowNumber,
         short seatNumber, decimal price)
     {
+        EventId = eventId;
+        UserId = userId;
+        EndsAt = endsAt;
+        HallId = hallId;
+        SectorId = sectorId;
+        RowNumber = rowNumber;
+        SeatNumber = seatNumber;
+        Price = price;
     }
 }

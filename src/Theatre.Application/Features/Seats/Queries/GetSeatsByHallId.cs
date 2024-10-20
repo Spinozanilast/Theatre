@@ -1,13 +1,14 @@
-﻿using MediatR;
+﻿
+using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Seats.Queries;
 
-public record GetSeatsByHallIdCommand(short HallId) : IRequest<IList<Seat>>;
+public record GetSeatsByHallIdCommand(short HallId);
 
 public class GetSeatsByHallIdCommandHandler(ISeatsRepository seatsRepository)
-    : IRequestHandler<GetSeatsByHallIdCommand, IList<Seat>>
+    : ICommandHandler<GetSeatsByHallIdCommand, IList<Seat>>
 {
     public async Task<IList<Seat>> Handle(GetSeatsByHallIdCommand request, CancellationToken cancellationToken)
     {

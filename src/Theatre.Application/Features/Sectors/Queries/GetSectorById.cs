@@ -1,14 +1,15 @@
 ﻿using ErrorOr;
-using MediatR;
+
+using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Sectors.Queries;
 
-public record GetSectorByIdCommand(short SectorId) : IRequest<ErrorOr<Sector>>;
+public record GetSectorByIdCommand(short SectorId);
 
 public class GetSectorByIdCommandHandler(ISectorsRepository sectorsRepository)
-    : IRequestHandler<GetSectorByIdCommand, ErrorOr<Sector>>
+    : ICommandHandler<GetSectorByIdCommand, ErrorOr<Sector>>
 {
     public async Task<ErrorOr<Sector>> Handle(GetSectorByIdCommand request, CancellationToken cancellationToken)
     {

@@ -1,14 +1,14 @@
 ﻿using ErrorOr;
-using MediatR;
+using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Sectors.Commands;
 
-public record CreateSectorCommand(short HallId, short RowsCount, short SeatsNum) : IRequest<ErrorOr<Success>>;
+public record CreateSectorCommand(short HallId, short RowsCount, short SeatsNum);
 
 public class CreateSectorCommandHandler(ISectorsRepository sectorsRepository)
-    : IRequestHandler<CreateSectorCommand, ErrorOr<Success>>
+    : ICommandHandler<CreateSectorCommand, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handle(CreateSectorCommand request, CancellationToken cancellationToken)
     {
