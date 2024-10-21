@@ -17,11 +17,16 @@ public class User : Entity
     public string Email { get; private set; }
     public string FirstName { get; private set; }
     public int VisitedEventsCount { get; private set; } = 0;
-    
+
     public void Update(string email, string phoneNumber, string firstName)
     {
         Email = email;
         PhoneNumber = phoneNumber;
         FirstName = firstName;
+    }
+
+    public void AddReminder(Guid reminderId)
+    {
+        _remindersIds.Add(reminderId);
     }
 }

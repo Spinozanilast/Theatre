@@ -3,6 +3,7 @@
     <Project Path="src\Theatre.Api\Theatre.Api.csproj" Type="Classic C#" />
     <Project Path="src\Theatre.Application\Theatre.Application.csproj" Type="Classic C#" />
     <Project Path="src\Theatre.Contracts\Theatre.Contracts.csproj" Type="Classic C#" />
+    <Project Path="src\Theatre.CqrsMediator\Theatre.CqrsMediator.csproj" Type="Classic C#" />
     <Project Path="src\Theatre.Domain\Theatre.Domain.csproj" Type="Classic C#" />
     <Project Path="src\Theatre.Infrastructure\Theatre.Infrastructure.csproj" Type="Classic C#" />
   </Folder>

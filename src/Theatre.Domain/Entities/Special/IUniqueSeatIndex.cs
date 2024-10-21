@@ -1,4 +1,4 @@
-﻿namespace Theatre.Domain.Entities;
+﻿namespace Theatre.Domain.Entities.Special;
 
 public interface IUniqueSeatIndex<out T> where T : struct
 {

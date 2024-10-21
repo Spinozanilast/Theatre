@@ -1,5 +1,6 @@
 ﻿using Theatre.Domain.Common;
 using Theatre.Domain.Entities.Enums;
+using Theatre.Domain.Entities.Special;
 
 namespace Theatre.Domain.Entities;
 
