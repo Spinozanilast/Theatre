@@ -1,11 +1,12 @@
-﻿using Theatre.Application.Common;
-using Theatre.Application.Common.Interfaces;
+﻿using Theatre.Application.Common.Interfaces;
+using Theatre.CqrsMediator.Commands;
+using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Users.Commands;
 
-public record RemoveUserCommand(Guid Id);
+public record RemoveUserCommand(Guid Id): IReturnType;
 
-public class RemoveUserCommandHandler(IUsersRepository usersRepository) : ICommandHandler<RemoveUserCommand>
+public class RemoveUserCommandHandler(IUsersRepository usersRepository) : ICommandHandlerWithCancellation<RemoveUserCommand>
 {
     public async Task Handle(RemoveUserCommand request, CancellationToken cancellationToken)
     {

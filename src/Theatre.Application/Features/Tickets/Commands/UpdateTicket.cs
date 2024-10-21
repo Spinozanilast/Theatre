@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
-using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
+using Theatre.CqrsMediator.Commands;
+using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Tickets.Commands;
 
@@ -14,10 +15,10 @@ public record UpdateTicketCommand(
     short RowNumber,
     short SeatNumber,
     decimal Price
-);
+) : IReturnType<ErrorOr<Success>>;
 
 public class UpdateTicketCommandHandler(ITicketsRepository ticketsRepository)
-    : ICommandHandler<UpdateTicketCommand, ErrorOr<Success>>
+    : ICommandHandlerWithCancellation<UpdateTicketCommand, ErrorOr<Success>>
 {
     public async Task<ErrorOr<Success>> Handle(UpdateTicketCommand request, CancellationToken cancellationToken)
     {

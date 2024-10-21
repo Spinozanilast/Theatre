@@ -1,14 +1,15 @@
 ﻿using ErrorOr;
-using Theatre.Application.Common;
 using Theatre.Application.Common.Interfaces;
+using Theatre.CqrsMediator.Queries;
+using Theatre.CqrsMediator.Special;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Users.Queries;
 
-public record GetByPhoneNumber(string PhoneNumber);
+public record GetByPhoneNumber(string PhoneNumber): IReturnType<ErrorOr<User>>;
 
-public class GetByPhoneNumberQueryHandler(IUsersRepository usersRepository)
-    : IQueryHandler<GetByPhoneNumber, ErrorOr<User>>
+public class GetByPhoneNumberQueryHandlerWithCancellation(IUsersRepository usersRepository)
+    : IQueryHandlerWithCancellation<GetByPhoneNumber, ErrorOr<User>>
 {
     public async Task<ErrorOr<User>> Handle(GetByPhoneNumber request, CancellationToken cancellationToken)
     {

@@ -1,14 +1,14 @@
-﻿
-using Theatre.Application.Common;
-using Theatre.Application.Common.Interfaces;
+﻿using Theatre.Application.Common.Interfaces;
+using Theatre.CqrsMediator.Commands;
+using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Halls.Commands;
 
-public record DeleteHallCommand(short HallId);
+public record DeleteHallCommand(short HallId) : IReturnType;
 
 public class DeleteHall(IHallsRepository hallsRepository) : ICommandHandler<DeleteHallCommand>
 {
-    public async Task Handle(DeleteHallCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteHallCommand request)
     {
         await hallsRepository.DeleteAsync(request.HallId);
     }

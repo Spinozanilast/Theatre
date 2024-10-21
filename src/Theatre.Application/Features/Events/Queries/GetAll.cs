@@ -1,12 +1,14 @@
-﻿using Theatre.Application.Common;
-using Theatre.Application.Common.Interfaces;
+﻿using Theatre.Application.Common.Interfaces;
+using Theatre.CqrsMediator.Commands;
+using Theatre.CqrsMediator.Special;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Events.Queries;
 
-public record GetAllEventsQuery();
+public record GetAllEventsQuery() : IReturnType<IList<Event>>;
 
-public class GetAllQueryHandler(IEventsRepository eventsRepository) : ICommandHandler<GetAllEventsQuery, IList<Event>>
+public class GetAllQueryHandler(IEventsRepository eventsRepository)
+    : ICommandHandlerWithCancellation<GetAllEventsQuery, IList<Event>>
 {
     public async Task<IList<Event>> Handle(GetAllEventsQuery request, CancellationToken cancellationToken)
     {
