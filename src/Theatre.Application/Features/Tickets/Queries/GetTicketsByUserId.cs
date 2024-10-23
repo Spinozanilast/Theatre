@@ -8,7 +8,7 @@ namespace Theatre.Application.Features.Tickets.Queries;
 public record GetTicketsByUserIdQuery(Guid UserId): IReturnType<IList<Ticket>>;
 
 public class GetTicketsByUserIdQueryHandler(ITicketsRepository ticketsRepository)
-    : IQueryHandler<GetTicketsByUserIdQuery, IList<Ticket>>
+    : IQueryHandler<GetTicketsByUserIdQuery, IList<Ticket>>, IHandler
 {
     public async Task<IList<Ticket>> Handle(GetTicketsByUserIdQuery request)
     {

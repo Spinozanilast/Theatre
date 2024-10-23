@@ -10,7 +10,7 @@ namespace Theatre.Application.Features.Seats.Queries;
 public record GetSeatByIdQuery(int SeatId) : IReturnType<ErrorOr<Seat>>;
 
 public class GetSeatByIdQueryHandler(ISeatsRepository seatsRepository)
-    : IQueryHandler<GetSeatByIdQuery, ErrorOr<Seat>>
+    : IQueryHandler<GetSeatByIdQuery, ErrorOr<Seat>>, IHandler
 {
     public async Task<ErrorOr<Seat>> Handle(GetSeatByIdQuery request)
     {

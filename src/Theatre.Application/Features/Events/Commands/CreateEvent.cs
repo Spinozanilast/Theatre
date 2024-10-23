@@ -21,7 +21,7 @@ public class CreateEventCommandHandler(
     IEventsRepository eventsRepository,
     IHallsRepository hallsRepository,
     IUnitOfWork unitOfWork)
-    : ICommandHandlerWithCancellation<CreateEventCommand, ErrorOr<Event>>
+    : ICommandHandlerWithCancellation<CreateEventCommand, ErrorOr<Event>>, IHandler
 {
     public async Task<ErrorOr<Event>> Handle(CreateEventCommand command, CancellationToken cancellationToken)
     {

@@ -10,7 +10,7 @@ namespace Theatre.Application.Features.Halls.Queries;
 public record GetHallByIdQuery(int Id): IReturnType<ErrorOr<Hall>>;
 
 public class GetHallByIdQueryHandler(IHallsRepository hallsRepository)
-    : IQueryHandler<GetHallByIdQuery, ErrorOr<Hall>>
+    : IQueryHandler<GetHallByIdQuery, ErrorOr<Hall>>, IHandler
 {
     public async Task<ErrorOr<Hall>> Handle(GetHallByIdQuery request)
     {

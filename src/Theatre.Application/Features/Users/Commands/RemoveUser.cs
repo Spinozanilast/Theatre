@@ -6,7 +6,7 @@ namespace Theatre.Application.Features.Users.Commands;
 
 public record RemoveUserCommand(Guid Id): IReturnType;
 
-public class RemoveUserCommandHandler(IUsersRepository usersRepository) : ICommandHandlerWithCancellation<RemoveUserCommand>
+public class RemoveUserCommandHandler(IUsersRepository usersRepository) : ICommandHandlerWithCancellation<RemoveUserCommand>, IHandler
 {
     public async Task Handle(RemoveUserCommand request, CancellationToken cancellationToken)
     {

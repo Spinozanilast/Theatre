@@ -7,7 +7,7 @@ namespace Theatre.Application.Features.Users.Commands;
 
 public record CreateUserCommand(string Email, string PhoneNumber, string FirstName): IReturnType<User>;
 
-public class CreateUserCommandHandler(IUsersRepository usersRepository) : ICommandHandlerWithCancellation<CreateUserCommand, User>
+public class CreateUserCommandHandler(IUsersRepository usersRepository) : ICommandHandlerWithCancellation<CreateUserCommand, User>, IHandler
 {
     public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {

@@ -10,7 +10,7 @@ namespace Theatre.Application.Features.Sectors.Queries;
 public record GetSectorByIdQuery(int SectorId): IReturnType<ErrorOr<Sector>>;
 
 public class GetSectorByIdQueryHandler(ISectorsRepository sectorsRepository)
-    : IQueryHandler<GetSectorByIdQuery, ErrorOr<Sector>>
+    : IQueryHandler<GetSectorByIdQuery, ErrorOr<Sector>>, IHandler
 {
     public async Task<ErrorOr<Sector>> Handle(GetSectorByIdQuery request)
     {

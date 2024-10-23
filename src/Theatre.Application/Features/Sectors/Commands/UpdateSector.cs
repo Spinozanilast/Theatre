@@ -8,7 +8,7 @@ namespace Theatre.Application.Features.Sectors.Commands;
 public record UpdateSectorCommand(int Id, int HallId, int RowsCount, int SeatsNum): IReturnType<ErrorOr<Success>>;
 
 public class UpdateSectorCommandHandler(ISectorsRepository sectorsRepository)
-    : ICommandHandler<UpdateSectorCommand, ErrorOr<Success>>
+    : ICommandHandler<UpdateSectorCommand, ErrorOr<Success>>, IHandler
 {
     public async Task<ErrorOr<Success>> Handle(UpdateSectorCommand request)
     {

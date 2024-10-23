@@ -18,7 +18,7 @@ public record UpdateTicketCommand(
 ) : IReturnType<ErrorOr<Success>>;
 
 public class UpdateTicketCommandHandler(ITicketsRepository ticketsRepository)
-    : ICommandHandler<UpdateTicketCommand, ErrorOr<Success>>
+    : ICommandHandler<UpdateTicketCommand, ErrorOr<Success>>, IHandler
 {
     public async Task<ErrorOr<Success>> Handle(UpdateTicketCommand request)
     {

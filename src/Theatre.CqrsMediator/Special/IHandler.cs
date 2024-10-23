@@ -1,6 +1,8 @@
 ﻿namespace Theatre.CqrsMediator.Special;
 
-public class IHandler
+/**
+ * Conventional Interface for commands and queries classes.
+ */
+public interface IHandler
 {
-    
 }

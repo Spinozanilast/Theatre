@@ -9,7 +9,7 @@ namespace Theatre.Application.Features.Seats.Queries;
 public record GetSeatsByHallIdQuery(int HallId) : IReturnType<IList<Seat>>;
 
 public class GetSeatsByHallIdQueryHandler(ISeatsRepository seatsRepository)
-    : IQueryHandler<GetSeatsByHallIdQuery, IList<Seat>>
+    : IQueryHandler<GetSeatsByHallIdQuery, IList<Seat>>, IHandler
 {
     public async Task<IList<Seat>> Handle(GetSeatsByHallIdQuery request)
     {

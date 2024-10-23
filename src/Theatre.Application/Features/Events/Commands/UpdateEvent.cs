@@ -22,7 +22,7 @@ public record UpdateEventCommand(
 public class UpdateEventCommandHandler(
     IEventsRepository eventsRepository,
     IUnitOfWork unitOfWork)
-    : ICommandHandlerWithCancellation<UpdateEventCommand, ErrorOr<Success>>
+    : ICommandHandlerWithCancellation<UpdateEventCommand, ErrorOr<Success>>, IHandler
 {
     public async Task<ErrorOr<Success>> Handle(UpdateEventCommand command, CancellationToken cancellationToken)
     {

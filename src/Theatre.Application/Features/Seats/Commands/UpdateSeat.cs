@@ -10,7 +10,7 @@ public record UpdateSeatCommand(int Id, int HallId, int SectorId, int Row, int N
     : IReturnType<ErrorOr<Success>>;
 
 public class UpdateSeatCommandHandler(ISeatsRepository seatsRepository)
-    : ICommandHandler<UpdateSeatCommand, ErrorOr<Success>>
+    : ICommandHandler<UpdateSeatCommand, ErrorOr<Success>>, IHandler
 {
     public async Task<ErrorOr<Success>> Handle(UpdateSeatCommand request)
     {

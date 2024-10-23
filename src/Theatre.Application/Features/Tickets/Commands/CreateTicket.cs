@@ -19,7 +19,7 @@ public record CreateTicketCommand(
 ) : IReturnType<ErrorOr<Ticket>>;
 
 public class CreateTicketCommandHandler(ITicketsRepository ticketsRepository)
-    : ICommandHandler<CreateTicketCommand, ErrorOr<Ticket>>
+    : ICommandHandler<CreateTicketCommand, ErrorOr<Ticket>>, IHandler
 {
     public async Task<ErrorOr<Ticket>> Handle(CreateTicketCommand request)
     {

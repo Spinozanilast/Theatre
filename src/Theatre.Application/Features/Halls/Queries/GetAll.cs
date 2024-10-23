@@ -8,7 +8,7 @@ namespace Theatre.Application.Features.Halls.Queries;
 
 public record GetAllHallsQuery(): IReturnType<IList<Hall>>;
 
-public class GetAllHallsQueryHandler(IHallsRepository hallsRepository) : IQueryHandler<GetAllHallsQuery, IList<Hall>>
+public class GetAllHallsQueryHandler(IHallsRepository hallsRepository) : IQueryHandler<GetAllHallsQuery, IList<Hall>>, IHandler
 {
     public async Task<IList<Hall>> Handle(GetAllHallsQuery request)
     {

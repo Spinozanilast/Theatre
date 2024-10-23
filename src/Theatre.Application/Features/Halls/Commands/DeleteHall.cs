@@ -6,7 +6,7 @@ namespace Theatre.Application.Features.Halls.Commands;
 
 public record DeleteHallCommand(int HallId) : IReturnType;
 
-public class DeleteHall(IHallsRepository hallsRepository) : ICommandHandler<DeleteHallCommand>
+public class DeleteHall(IHallsRepository hallsRepository) : ICommandHandler<DeleteHallCommand>, IHandler
 {
     public async Task Handle(DeleteHallCommand request)
     {

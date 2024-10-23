@@ -8,7 +8,7 @@ namespace Theatre.Application.Features.Seats.Commands;
 public record DeleteSeatCommand(int Id) : IReturnType<ErrorOr<Success>>;
 
 public class DeleteSeatCommandHandler(ISeatsRepository seatsRepository)
-    : ICommandHandler<DeleteSeatCommand, ErrorOr<Success>>
+    : ICommandHandler<DeleteSeatCommand, ErrorOr<Success>>, IHandler
 {
     public async Task<ErrorOr<Success>> Handle(DeleteSeatCommand request)
     {

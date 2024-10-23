@@ -8,7 +8,7 @@ namespace Theatre.Application.Features.Tickets.Commands;
 public record DeleteTicketCommand(Guid TicketId) : IReturnType<ErrorOr<Success>>;
 
 public class DeleteTicketCommandHandler(ITicketsRepository ticketsRepository)
-    : ICommandHandler<DeleteTicketCommand, ErrorOr<Success>>
+    : ICommandHandler<DeleteTicketCommand, ErrorOr<Success>>, IHandler
 {
     public async Task<ErrorOr<Success>> Handle(DeleteTicketCommand request)
     {

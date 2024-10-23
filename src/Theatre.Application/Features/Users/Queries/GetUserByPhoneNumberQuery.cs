@@ -9,7 +9,7 @@ namespace Theatre.Application.Features.Users.Queries;
 public record GetUserByPhoneNumberQuery(string PhoneNumber): IReturnType<ErrorOr<User>>;
 
 public class GetByPhoneNumberQueryHandlerWithCancellation(IUsersRepository usersRepository)
-    : IQueryHandlerWithCancellation<GetUserByPhoneNumberQuery, ErrorOr<User>>
+    : IQueryHandlerWithCancellation<GetUserByPhoneNumberQuery, ErrorOr<User>>, IHandler
 {
     public async Task<ErrorOr<User>> Handle(GetUserByPhoneNumberQuery request, CancellationToken cancellationToken)
     {

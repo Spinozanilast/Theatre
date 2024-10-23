@@ -8,7 +8,7 @@ namespace Theatre.Application.Features.Users.Queries;
 
 public record GetUserByIdQuery(Guid Id): IReturnType<ErrorOr<User>>;
 
-public class GetUserByIdQueryHandlerWithCancellation(IUsersRepository usersRepository) : IQueryHandlerWithCancellation<GetUserByIdQuery, ErrorOr<User>>
+public class GetUserByIdQueryHandlerWithCancellation(IUsersRepository usersRepository) : IQueryHandlerWithCancellation<GetUserByIdQuery, ErrorOr<User>>, IHandler
 {
     public async Task<ErrorOr<User>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {

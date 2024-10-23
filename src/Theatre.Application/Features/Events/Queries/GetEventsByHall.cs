@@ -9,7 +9,7 @@ namespace Theatre.Application.Features.Events.Queries;
 public record GetEventsByHallIdQuery(int HallId) : IReturnType<IList<Event>>;
 
 public class GetEventsByHallQueryHandler(IEventsRepository eventsRepository)
-    : IQueryHandlerWithCancellation<GetEventsByHallIdQuery, IList<Event>>
+    : IQueryHandlerWithCancellation<GetEventsByHallIdQuery, IList<Event>>, IHandler
 {
     public async Task<IList<Event>> Handle(GetEventsByHallIdQuery request, CancellationToken cancellationToken)
     {

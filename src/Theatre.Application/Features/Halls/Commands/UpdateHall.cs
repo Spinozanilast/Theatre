@@ -8,7 +8,7 @@ namespace Theatre.Application.Features.Halls.Commands;
 public record UpdateHallCommand(int Id, int SeatsNum, string HallName) : IReturnType<ErrorOr<Success>>;
 
 public class UpdateHallCommandHandler(IHallsRepository hallsRepository)
-    : ICommandHandler<UpdateHallCommand, ErrorOr<Success>>
+    : ICommandHandler<UpdateHallCommand, ErrorOr<Success>>, IHandler
 {
     public async Task<ErrorOr<Success>> Handle(UpdateHallCommand request)
     {

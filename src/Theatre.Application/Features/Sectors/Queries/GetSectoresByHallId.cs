@@ -9,7 +9,7 @@ namespace Theatre.Application.Features.Sectors.Queries;
 public record GetSectorsByHallIdQuery(int HallId): IReturnType<IList<Sector>>;
 
 public class GetSectorsByHallIdQueryHandler(ISectorsRepository sectorsRepository)
-    : IQueryHandler<GetSectorsByHallIdQuery, IList<Sector>>
+    : IQueryHandler<GetSectorsByHallIdQuery, IList<Sector>>, IHandler
 {
     public async Task<IList<Sector>> Handle(GetSectorsByHallIdQuery query)
     {

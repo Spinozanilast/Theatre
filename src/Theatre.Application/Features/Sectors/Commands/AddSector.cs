@@ -9,7 +9,7 @@ namespace Theatre.Application.Features.Sectors.Commands;
 public record CreateSectorCommand(int HallId, int RowsCount, int SeatsNum): IReturnType<ErrorOr<Sector>>;
 
 public class CreateSectorCommandHandler(ISectorsRepository sectorsRepository)
-    : ICommandHandler<CreateSectorCommand, ErrorOr<Sector>>
+    : ICommandHandler<CreateSectorCommand, ErrorOr<Sector>>, IHandler
 {
     public async Task<ErrorOr<Sector>> Handle(CreateSectorCommand request)
     {

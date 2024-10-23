@@ -6,7 +6,7 @@ namespace Theatre.Application.Features.Sectors.Commands;
 
 public record DeleteSectorCommand(int SectorId): IReturnType;
 
-public class DeleteSectorCommandHandler(ISectorsRepository sectorsRepository) : ICommandHandler<DeleteSectorCommand>
+public class DeleteSectorCommandHandler(ISectorsRepository sectorsRepository) : ICommandHandler<DeleteSectorCommand>, IHandler
 {
     public async Task Handle(DeleteSectorCommand request)
     {

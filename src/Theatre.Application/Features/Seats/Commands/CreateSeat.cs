@@ -11,7 +11,7 @@ public record CreateSeatCommand(int HallId, int SectorId, int Row, int Number, S
     : IReturnType<ErrorOr<Seat>>;
 
 public class CreateSeatCommandHandler(ISeatsRepository seatsRepository)
-    : ICommandHandler<CreateSeatCommand, ErrorOr<Seat>>
+    : ICommandHandler<CreateSeatCommand, ErrorOr<Seat>>, IHandler
 {
     public async Task<ErrorOr<Seat>> Handle(CreateSeatCommand request)
     {

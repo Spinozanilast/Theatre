@@ -9,7 +9,7 @@ namespace Theatre.Application.Features.Halls.Commands;
 public record CreateHallCommand(int SeatsNum, string HallName) : IReturnType<ErrorOr<Hall>>;
 
 public class CreateHallCommandHandler(IHallsRepository hallsRepository)
-    : ICommandHandler<CreateHallCommand, ErrorOr<Hall>>
+    : ICommandHandler<CreateHallCommand, ErrorOr<Hall>>, IHandler
 {
     public async Task<ErrorOr<Hall>> Handle(CreateHallCommand request)
     {
