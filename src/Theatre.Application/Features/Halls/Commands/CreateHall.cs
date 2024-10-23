@@ -6,15 +6,15 @@ using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Halls.Commands;
 
-public record CreateHallCommand(int SeatsNum, string HallName) : IReturnType<ErrorOr<Success>>;
+public record CreateHallCommand(int SeatsNum, string HallName) : IReturnType<ErrorOr<Hall>>;
 
 public class CreateHallCommandHandler(IHallsRepository hallsRepository)
-    : ICommandHandler<CreateHallCommand, ErrorOr<Success>>
+    : ICommandHandler<CreateHallCommand, ErrorOr<Hall>>
 {
-    public async Task<ErrorOr<Success>> Handle(CreateHallCommand request)
+    public async Task<ErrorOr<Hall>> Handle(CreateHallCommand request)
     {
         var hall = new Hall(request.SeatsNum, request.HallName);
         await hallsRepository.CreateAsync(hall);
-        return Result.Success;
+        return hall;
     }
 }

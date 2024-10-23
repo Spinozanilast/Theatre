@@ -5,7 +5,7 @@ using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Sectors.Commands;
 
-public record UpdateSectorCommand(short Id, short HallId, short RowsCount, short SeatsNum): IReturnType<ErrorOr<Success>>;
+public record UpdateSectorCommand(int Id, int HallId, int RowsCount, int SeatsNum): IReturnType<ErrorOr<Success>>;
 
 public class UpdateSectorCommandHandler(ISectorsRepository sectorsRepository)
     : ICommandHandler<UpdateSectorCommand, ErrorOr<Success>>

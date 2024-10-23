@@ -2,11 +2,11 @@
 using Theatre.Application.Common.Interfaces;
 using Theatre.CqrsMediator.Commands;
 using Theatre.CqrsMediator.Special;
-using Theatre.Domain.Entities.Enums;
+using Theatre.Domain.Entities.Enumerations;
 
 namespace Theatre.Application.Features.Seats.Commands;
 
-public record UpdateSeatCommand(short Id, short HallId, short SectorId, short Row, short Number, SeatType SeatType)
+public record UpdateSeatCommand(int Id, int HallId, int SectorId, int Row, int Number, SeatType SeatType)
     : IReturnType<ErrorOr<Success>>;
 
 public class UpdateSeatCommandHandler(ISeatsRepository seatsRepository)

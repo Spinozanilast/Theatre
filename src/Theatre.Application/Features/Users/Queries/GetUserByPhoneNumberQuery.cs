@@ -6,12 +6,12 @@ using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Users.Queries;
 
-public record GetByPhoneNumber(string PhoneNumber): IReturnType<ErrorOr<User>>;
+public record GetUserByPhoneNumberQuery(string PhoneNumber): IReturnType<ErrorOr<User>>;
 
 public class GetByPhoneNumberQueryHandlerWithCancellation(IUsersRepository usersRepository)
-    : IQueryHandlerWithCancellation<GetByPhoneNumber, ErrorOr<User>>
+    : IQueryHandlerWithCancellation<GetUserByPhoneNumberQuery, ErrorOr<User>>
 {
-    public async Task<ErrorOr<User>> Handle(GetByPhoneNumber request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<User>> Handle(GetUserByPhoneNumberQuery request, CancellationToken cancellationToken)
     {
         var user = await usersRepository.GetByPhoneNumberAsync(request.PhoneNumber, cancellationToken);
 

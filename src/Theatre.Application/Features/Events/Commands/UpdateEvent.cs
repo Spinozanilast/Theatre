@@ -2,7 +2,7 @@
 using Theatre.Application.Common.Interfaces;
 using Theatre.CqrsMediator.Commands;
 using Theatre.CqrsMediator.Special;
-using Theatre.Domain.Entities.Enums;
+using Theatre.Domain.Entities.Enumerations;
 using Theatre.Domain.Entities.Special;
 
 namespace Theatre.Application.Features.Events.Commands;
@@ -12,7 +12,7 @@ public record UpdateEventCommand(
     string Name,
     EventType EventType,
     DateTime DateTime,
-    short HallId,
+    int HallId,
     string Description,
     EventCast EventCast,
     decimal Price,

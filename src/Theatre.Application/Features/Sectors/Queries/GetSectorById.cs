@@ -1,15 +1,16 @@
 ﻿using ErrorOr;
 using Theatre.Application.Common.Interfaces;
 using Theatre.CqrsMediator.Commands;
+using Theatre.CqrsMediator.Queries;
 using Theatre.CqrsMediator.Special;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Sectors.Queries;
 
-public record GetSectorByIdQuery(short SectorId): IReturnType<ErrorOr<Sector>>;
+public record GetSectorByIdQuery(int SectorId): IReturnType<ErrorOr<Sector>>;
 
 public class GetSectorByIdQueryHandler(ISectorsRepository sectorsRepository)
-    : ICommandHandler<GetSectorByIdQuery, ErrorOr<Sector>>
+    : IQueryHandler<GetSectorByIdQuery, ErrorOr<Sector>>
 {
     public async Task<ErrorOr<Sector>> Handle(GetSectorByIdQuery request)
     {

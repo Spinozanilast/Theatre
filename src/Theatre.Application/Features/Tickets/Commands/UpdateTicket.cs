@@ -10,17 +10,17 @@ public record UpdateTicketCommand(
     Guid EventId,
     Guid UserId,
     DateTime EndsAt,
-    short HallId,
-    short SectorId,
-    short RowNumber,
-    short SeatNumber,
+    int HallId,
+    int SectorId,
+    int RowNumber,
+    int SeatNumber,
     decimal Price
 ) : IReturnType<ErrorOr<Success>>;
 
 public class UpdateTicketCommandHandler(ITicketsRepository ticketsRepository)
-    : ICommandHandlerWithCancellation<UpdateTicketCommand, ErrorOr<Success>>
+    : ICommandHandler<UpdateTicketCommand, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(UpdateTicketCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Success>> Handle(UpdateTicketCommand request)
     {
         var ticket = await ticketsRepository.GetByIdAsync(request.TicketId);
         if (ticket is null)

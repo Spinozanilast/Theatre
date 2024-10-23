@@ -5,7 +5,7 @@ using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Halls.Commands;
 
-public record UpdateHallCommand(short Id, int SeatsNum, string HallName) : IReturnType<ErrorOr<Success>>;
+public record UpdateHallCommand(int Id, int SeatsNum, string HallName) : IReturnType<ErrorOr<Success>>;
 
 public class UpdateHallCommandHandler(IHallsRepository hallsRepository)
     : ICommandHandler<UpdateHallCommand, ErrorOr<Success>>

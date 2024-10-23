@@ -6,14 +6,26 @@ using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Tickets.Commands;
 
-public record CreateTicketCommand(Ticket Ticket): IReturnType<ErrorOr<Success>>;
+public record CreateTicketCommand(
+    Guid EventId,
+    Guid UserId,
+    int HallId,
+    int SectorId,
+    int RowNumber,
+    int SeatNumber,
+    decimal Price,
+    DateTime EndsAt,
+    DateTime StartsAt
+) : IReturnType<ErrorOr<Ticket>>;
 
 public class CreateTicketCommandHandler(ITicketsRepository ticketsRepository)
-    : ICommandHandlerWithCancellation<CreateTicketCommand, ErrorOr<Success>>
+    : ICommandHandler<CreateTicketCommand, ErrorOr<Ticket>>
 {
-    public async Task<ErrorOr<Success>> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Ticket>> Handle(CreateTicketCommand request)
     {
-        await ticketsRepository.CreateAsync(request.Ticket);
-        return Result.Success;
+        var ticket = new Ticket(new Guid(), request.EventId, request.UserId, request.HallId, request.SectorId,
+            request.RowNumber, request.SeatNumber, request.Price, request.EndsAt, request.StartsAt);
+        await ticketsRepository.CreateAsync(ticket);
+        return ticket;
     }
 }

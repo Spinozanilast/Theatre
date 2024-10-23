@@ -4,7 +4,7 @@ using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Sectors.Commands;
 
-public record DeleteSectorCommand(short SectorId): IReturnType;
+public record DeleteSectorCommand(int SectorId): IReturnType;
 
 public class DeleteSectorCommandHandler(ISectorsRepository sectorsRepository) : ICommandHandler<DeleteSectorCommand>
 {

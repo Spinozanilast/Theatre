@@ -1,0 +1,6 @@
+﻿namespace Theatre.Infrastructure.Data.Configurations;
+
+public class HallsSet
+{
+    
+}

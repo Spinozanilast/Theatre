@@ -8,9 +8,9 @@ namespace Theatre.Application.Features.Tickets.Commands;
 public record DeleteTicketCommand(Guid TicketId) : IReturnType<ErrorOr<Success>>;
 
 public class DeleteTicketCommandHandler(ITicketsRepository ticketsRepository)
-    : ICommandHandlerWithCancellation<DeleteTicketCommand, ErrorOr<Success>>
+    : ICommandHandler<DeleteTicketCommand, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(DeleteTicketCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Success>> Handle(DeleteTicketCommand request)
     {
         await ticketsRepository.DeleteAsync(request.TicketId);
         return Result.Success;

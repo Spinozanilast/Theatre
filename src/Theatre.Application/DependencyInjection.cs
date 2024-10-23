@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Theatre.CqrsMediator.Commands;
 
 namespace Theatre.Application;
 
