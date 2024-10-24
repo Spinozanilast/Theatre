@@ -4,8 +4,8 @@ namespace Theatre.Application.Common.Interfaces;
 
 public interface ISeatsRepository
 {
-    Task<IList<Seat>> GetSeatsByHallIdAsync(int hallId);
-    Task<IList<Seat>> GetSeatsBySectorIdAsync(int sectorId);
+    Task<List<Seat>> GetSeatsByHallIdAsync(int hallId);
+    Task<List<Seat>> GetSeatsBySectorIdAsync(int sectorId);
     Task<Seat?> GetByIdAsync(int id);
     Task CreateAsync(Seat seatEntity);
     Task UpdateAsync(Seat seatEntity);

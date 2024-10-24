@@ -5,11 +5,10 @@ services:
       POSTGRES_DB: "Theatre"
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "admin"
-      PGDATA: "/var/lib/postgresql/data/theatre"
     ports:
-      - "5433:5433"
+      - "5433:5432"
     volumes:
-      - theatre-db-volume:/var/lib/postgresql/data/theatre
+      - theatre-db-volume:/var/theatre/data
 
 volumes:
   theatre-db-volume:

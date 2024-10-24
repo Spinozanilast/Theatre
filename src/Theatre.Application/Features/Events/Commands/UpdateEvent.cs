@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
+using Mediator;
 using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Special;
 using Theatre.Domain.Entities.Enumerations;
 using Theatre.Domain.Entities.Special;
 
@@ -17,14 +16,13 @@ public record UpdateEventCommand(
     EventCast EventCast,
     decimal Price,
     bool EventState
-) : IReturnType<ErrorOr<Success>>;
+) : ICommand<ErrorOr<Success>>;
 
 public class UpdateEventCommandHandler(
     IEventsRepository eventsRepository,
-    IUnitOfWork unitOfWork)
-    : ICommandHandlerWithCancellation<UpdateEventCommand, ErrorOr<Success>>, IHandler
+    IUnitOfWork unitOfWork) : ICommandHandler<UpdateEventCommand, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(UpdateEventCommand command, CancellationToken cancellationToken)
+    public async ValueTask<ErrorOr<Success>> Handle(UpdateEventCommand command, CancellationToken cancellationToken)
     {
         var eventToUpdate = await eventsRepository.GetByIdAsync(command.EventId);
         if (eventToUpdate is null)

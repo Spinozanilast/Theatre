@@ -9,7 +9,7 @@ public class TicketsRepository(TheatreDbContext dbContext) : ITicketsRepository
 {
     private readonly TheatreDbContext _dbContext = dbContext;
 
-    public async Task<IList<Ticket>> GetTicketsByUserIdAsync(Guid userId)
+    public async Task<List<Ticket>> GetTicketsByUserIdAsync(Guid userId)
     {
         return await _dbContext.Tickets.AsNoTracking().Where(ticket => ticket.UserId == userId).ToListAsync();
     }

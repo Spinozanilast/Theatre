@@ -1,17 +1,15 @@
-﻿using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Queries;
-using Theatre.CqrsMediator.Special;
+﻿using Mediator;
+using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Sectors.Queries;
 
-public record GetSectorsByHallIdQuery(int HallId): IReturnType<IList<Sector>>;
+public record GetSectorsByHallIdQuery(int HallId): IQuery<List<Sector>>;
 
 public class GetSectorsByHallIdQueryHandler(ISectorsRepository sectorsRepository)
-    : IQueryHandler<GetSectorsByHallIdQuery, IList<Sector>>, IHandler
+    : IQueryHandler<GetSectorsByHallIdQuery, List<Sector>>
 {
-    public async Task<IList<Sector>> Handle(GetSectorsByHallIdQuery query)
+    public async ValueTask<List<Sector>> Handle(GetSectorsByHallIdQuery query, CancellationToken cn = default)
     {
         return await sectorsRepository.GetSectorsByHallId(query.HallId);
     }

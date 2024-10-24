@@ -2,12 +2,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Theatre.Domain\Theatre.Domain.csproj" />
-    <ProjectReference Include="..\Theatre.CqrsMediator\Theatre.CqrsMediator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ErrorOr" Version="2.0.1" />
-    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Mediator.Abstractions" Version="2.1.7" />
+    <PackageReference Include="Mediator.SourceGenerator" Version="2.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
   </ItemGroup>
 

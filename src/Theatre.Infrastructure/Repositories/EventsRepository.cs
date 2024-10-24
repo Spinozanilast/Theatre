@@ -9,7 +9,7 @@ public class EventsRepository(TheatreDbContext dbContext) : IEventsRepository
 {
     private readonly TheatreDbContext _dbContext = dbContext;
 
-    public async Task<IList<Event>> GetEventsByHallAsync(int hallId)
+    public async Task<List<Event>> GetEventsByHallAsync(int hallId)
     {
         return await _dbContext
             .Events.Where(e => e.HallId == hallId).AsNoTracking().ToListAsync();
@@ -21,7 +21,7 @@ public class EventsRepository(TheatreDbContext dbContext) : IEventsRepository
     }
 
 
-    public async Task<IList<Event>> GetAllAsync()
+    public async Task<List<Event>> GetAllAsync()
     {
         return await _dbContext.Events.AsNoTracking().ToListAsync();
     }

@@ -1,16 +1,14 @@
 ﻿using ErrorOr;
+using Mediator;
 using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Events.Commands;
 
-public record DeleteEventCommand(Guid EventId) : IReturnType<ErrorOr<Success>>;
+public record DeleteEventCommand(Guid EventId):  ICommand<ErrorOr<Success>>;
 
-public class DeleteEventCommandHandler(IEventsRepository eventsRepository)
-    : ICommandHandlerWithCancellation<DeleteEventCommand, ErrorOr<Success>>, IHandler
+public class DeleteEventCommandHandler(IEventsRepository eventsRepository) : ICommandHandler<DeleteEventCommand, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(DeleteEventCommand command, CancellationToken cancellationToken)
+    public async ValueTask<ErrorOr<Success>> Handle(DeleteEventCommand command, CancellationToken cancellationToken)
     {
         await eventsRepository.DeleteAsync(command.EventId);
 

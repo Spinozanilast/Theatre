@@ -1,16 +1,14 @@
 ﻿using ErrorOr;
+using Mediator;
 using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Sectors.Commands;
 
-public record UpdateSectorCommand(int Id, int HallId, int RowsCount, int SeatsNum): IReturnType<ErrorOr<Success>>;
+public record UpdateSectorCommand(int Id, int HallId, int RowsCount, int SeatsNum): ICommand<ErrorOr<Success>>;
 
-public class UpdateSectorCommandHandler(ISectorsRepository sectorsRepository)
-    : ICommandHandler<UpdateSectorCommand, ErrorOr<Success>>, IHandler
+public class UpdateSectorCommandHandler(ISectorsRepository sectorsRepository): ICommandHandler<UpdateSectorCommand, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(UpdateSectorCommand request)
+    public async ValueTask<ErrorOr<Success>> Handle(UpdateSectorCommand request, CancellationToken cn = default)
     {
         var sector = await sectorsRepository.GetByIdAsync(request.Id);
         if (sector is null)

@@ -14,7 +14,7 @@ public class HallsRepository(TheatreDbContext theatreDbContext) : IHallsReposito
         return await _theatreDbContext.Halls.FindAsync(id);
     }
 
-    public async Task<IList<Hall>> GetAllAsync()
+    public async Task<List<Hall>> GetAllAsync()
     {
         return await _theatreDbContext.Halls.AsNoTracking().ToListAsync();
     }

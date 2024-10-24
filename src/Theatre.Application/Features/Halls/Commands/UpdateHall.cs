@@ -1,16 +1,15 @@
 ﻿using ErrorOr;
+using Mediator;
 using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Halls.Commands;
 
-public record UpdateHallCommand(int Id, int SeatsNum, string HallName) : IReturnType<ErrorOr<Success>>;
+public record UpdateHallCommand(int Id, int SeatsNum, string HallName): ICommand<ErrorOr<Success>>;
 
 public class UpdateHallCommandHandler(IHallsRepository hallsRepository)
-    : ICommandHandler<UpdateHallCommand, ErrorOr<Success>>, IHandler
+    : ICommandHandler<UpdateHallCommand, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(UpdateHallCommand request)
+    public async ValueTask<ErrorOr<Success>> Handle(UpdateHallCommand request, CancellationToken cn = default)
     {
         var hall = await hallsRepository.GetByIdAsync(request.Id);
         if (hall is null)

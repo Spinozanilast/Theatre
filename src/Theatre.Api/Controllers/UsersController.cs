@@ -1,11 +1,9 @@
-﻿using System.Drawing;
+﻿using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Theatre.Application.Features.Users.Commands;
 using Theatre.Application.Features.Users.Queries;
 using Theatre.Contracts.Users;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Queries;
 
 namespace Theatre.Api.Controllers;
 
@@ -13,23 +11,19 @@ namespace Theatre.Api.Controllers;
 [Route("[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly ICommandDispatcherWithCancellation _commandDispatcher;
-    private readonly IQueryDispatcherWithCancellation _queryDispatcher;
+    private readonly IMediator _mediator;
 
-    public UsersController(ICommandDispatcherWithCancellation commandDispatcher,
-        IQueryDispatcherWithCancellation queryDispatcher)
+    public UsersController(IMediator mediator)
     {
-        _commandDispatcher = commandDispatcher;
-        _queryDispatcher = queryDispatcher;
+        _mediator = mediator;
     }
-
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserContract))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
     {
-        var result = await _commandDispatcher.Dispatch(command, cancellationToken);
+        var result = await _mediator.Send(command, cancellationToken);
         return CreatedAtAction(nameof(Get), new { userId = result.Id }, result.ToResponse());
     }
 
@@ -41,7 +35,7 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Remove([FromRoute] Guid userId, CancellationToken cancellationToken)
     {
         var deleteUserByIdCommand = new RemoveUserCommand(userId);
-        await _commandDispatcher.Dispatch(deleteUserByIdCommand, cancellationToken);
+        await _mediator.Send(deleteUserByIdCommand, cancellationToken);
         return NoContent();
     }
 
@@ -51,19 +45,19 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Get([FromRoute] Guid userId, CancellationToken cancellationToken)
     {
         var getUserByIdQuery = new GetUserByIdQuery(userId);
-        var result = await _queryDispatcher.Dispatch(getUserByIdQuery, cancellationToken);
+        var result = await _mediator.Send(getUserByIdQuery, cancellationToken);
         return result.Match<IActionResult>(
             user => Ok(),
             NotFound);
     }
 
-    [HttpGet("by-phone")]
+    [HttpGet("by-phone/{phoneNumber:required}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserContract))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get([FromBody] string phoneNumber, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get([FromRoute] string phoneNumber, CancellationToken cancellationToken)
     {
         var getUserByphoneNumberQuery = new GetUserByPhoneNumberQuery(phoneNumber);
-        var result = await _queryDispatcher.Dispatch(getUserByphoneNumberQuery, cancellationToken);
+        var result = await _mediator.Send(getUserByphoneNumberQuery, cancellationToken);
         return result.Match<IActionResult>(
             user => Ok(),
             NotFound);

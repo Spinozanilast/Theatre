@@ -1,8 +1,6 @@
 ﻿using ErrorOr;
-using MediatR;
+using Mediator;
 using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Special;
 using Theatre.Domain.Entities;
 using Theatre.Domain.Entities.Enumerations;
 using Theatre.Domain.Entities.Special;
@@ -16,15 +14,14 @@ public record CreateEventCommand(
     int HallId,
     decimal Price,
     EventType EventType,
-    EventCast EventCast) : IReturnType<ErrorOr<Event>>;
+    EventCast EventCast) : ICommand<ErrorOr<Event>>;
 
 public class CreateEventCommandHandler(
     IEventsRepository eventsRepository,
     IHallsRepository hallsRepository,
-    IUnitOfWork unitOfWork)
-    : ICommandHandlerWithCancellation<CreateEventCommand, ErrorOr<Event>>, IHandler
+    IUnitOfWork unitOfWork) : ICommandHandler<CreateEventCommand, ErrorOr<Event>>
 {
-    public async Task<ErrorOr<Event>> Handle(CreateEventCommand command, CancellationToken cancellationToken)
+    public async ValueTask<ErrorOr<Event>> Handle(CreateEventCommand command, CancellationToken cancellationToken)
     {
         var hall = await hallsRepository.GetByIdAsync(command.HallId);
 
@@ -32,7 +29,7 @@ public class CreateEventCommandHandler(
         {
             return Error.NotFound(description: "Hall not found");
         }
-        
+
         var eventEntity = new Event(
             Guid.NewGuid(),
             command.Name,

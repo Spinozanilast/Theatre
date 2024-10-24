@@ -1,18 +1,15 @@
 ﻿using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
 using Theatre.Domain.Entities;
 using ErrorOr;
-using Theatre.CqrsMediator.Queries;
-using Theatre.CqrsMediator.Special;
+using Mediator;
 
 namespace Theatre.Application.Features.Seats.Queries;
 
-public record GetSeatByIdQuery(int SeatId) : IReturnType<ErrorOr<Seat>>;
+public record GetSeatByIdQuery(int SeatId): IQuery<ErrorOr<Seat>>;
 
-public class GetSeatByIdQueryHandler(ISeatsRepository seatsRepository)
-    : IQueryHandler<GetSeatByIdQuery, ErrorOr<Seat>>, IHandler
+public class GetSeatByIdQueryHandler(ISeatsRepository seatsRepository): IQueryHandler<GetSeatByIdQuery, ErrorOr<Seat>>
 {
-    public async Task<ErrorOr<Seat>> Handle(GetSeatByIdQuery request)
+    public async ValueTask<ErrorOr<Seat>> Handle(GetSeatByIdQuery request, CancellationToken cn = default)
     {
         var seat = await seatsRepository.GetByIdAsync(request.SeatId);
 

@@ -1,15 +1,15 @@
-﻿using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Special;
+﻿using Mediator;
+using Theatre.Application.Common.Interfaces;
 
 namespace Theatre.Application.Features.Users.Commands;
 
-public record RemoveUserCommand(Guid Id): IReturnType;
+public record RemoveUserCommand(Guid Id): ICommand;
 
-public class RemoveUserCommandHandler(IUsersRepository usersRepository) : ICommandHandlerWithCancellation<RemoveUserCommand>, IHandler
+public class RemoveUserCommandHandler(IUsersRepository usersRepository): ICommandHandler<RemoveUserCommand>
 {
-    public async Task Handle(RemoveUserCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Unit> Handle(RemoveUserCommand request, CancellationToken cancellationToken)
     {
         await usersRepository.RemoveAsync(request.Id, cancellationToken);
+        return Unit.Value;
     }
 }

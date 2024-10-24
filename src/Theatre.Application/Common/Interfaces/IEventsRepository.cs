@@ -4,8 +4,8 @@ namespace Theatre.Application.Common.Interfaces;
 
 public interface IEventsRepository
 {
-    Task<IList<Event>> GetEventsByHallAsync(int hallId);
-    Task<IList<Event>> GetAllAsync();
+    Task<List<Event>> GetEventsByHallAsync(int hallId);
+    Task<List<Event>> GetAllAsync();
     Task<Event?> GetByIdAsync(Guid id);
     Task CreateAsync(Event eventEntity);
     Task UpdateAsync(Event eventEntity);

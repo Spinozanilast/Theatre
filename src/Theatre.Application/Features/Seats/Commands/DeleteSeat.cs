@@ -1,16 +1,14 @@
 ﻿using ErrorOr;
+using Mediator;
 using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Special;
 
 namespace Theatre.Application.Features.Seats.Commands;
 
-public record DeleteSeatCommand(int Id) : IReturnType<ErrorOr<Success>>;
+public record DeleteSeatCommand(int Id): ICommand<ErrorOr<Success>>;
 
-public class DeleteSeatCommandHandler(ISeatsRepository seatsRepository)
-    : ICommandHandler<DeleteSeatCommand, ErrorOr<Success>>, IHandler
+public class DeleteSeatCommandHandler(ISeatsRepository seatsRepository): ICommandHandler<DeleteSeatCommand, ErrorOr<Success>>
 {
-    public async Task<ErrorOr<Success>> Handle(DeleteSeatCommand request)
+    public async ValueTask<ErrorOr<Success>> Handle(DeleteSeatCommand request, CancellationToken cn = default)
     {
         await seatsRepository.DeleteAsync(request.Id);
         return Result.Success;

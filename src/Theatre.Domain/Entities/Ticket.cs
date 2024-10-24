@@ -6,7 +6,7 @@ namespace Theatre.Domain.Entities;
 public class Ticket : Entity, IUniqueSeatIndex<int>
 {
     public Ticket(Guid id, Guid eventId, Guid userId, int hallId, int sectorId, int rowNumber, int seatNumber,
-        decimal price, DateTime endsAt, DateTime startsAt) : base(id)
+        decimal price, DateTime endsAt, DateTime startsAt, DateTime bookingTime) : base(id)
     {
         EventId = eventId;
         UserId = userId;
@@ -17,6 +17,7 @@ public class Ticket : Entity, IUniqueSeatIndex<int>
         Price = price;
         EndsAt = endsAt;
         StartsAt = startsAt;
+        BookingTime = bookingTime;
     }
 
     public Guid EventId { get; set; }
@@ -32,6 +33,8 @@ public class Ticket : Entity, IUniqueSeatIndex<int>
     public decimal Price { get; set; }
     public DateTime StartsAt { get; set; }
     public DateTime EndsAt { get; set; }
+
+    public DateTime BookingTime { get; set; }
 
     public bool IsPaid { get; } = false;
     public bool IsCancelled { get; } = false;

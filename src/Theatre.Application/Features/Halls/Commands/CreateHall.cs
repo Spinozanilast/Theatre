@@ -1,17 +1,16 @@
 ﻿using ErrorOr;
+using Mediator;
 using Theatre.Application.Common.Interfaces;
-using Theatre.CqrsMediator.Commands;
-using Theatre.CqrsMediator.Special;
 using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Features.Halls.Commands;
 
-public record CreateHallCommand(int SeatsNum, string HallName) : IReturnType<ErrorOr<Hall>>;
+public record CreateHallCommand(int SeatsNum, string HallName): ICommand<ErrorOr<Hall>>;
 
 public class CreateHallCommandHandler(IHallsRepository hallsRepository)
-    : ICommandHandler<CreateHallCommand, ErrorOr<Hall>>, IHandler
+    : ICommandHandler<CreateHallCommand, ErrorOr<Hall>>
 {
-    public async Task<ErrorOr<Hall>> Handle(CreateHallCommand request)
+    public async ValueTask<ErrorOr<Hall>> Handle(CreateHallCommand request, CancellationToken ct = default)
     {
         var hall = new Hall(request.SeatsNum, request.HallName);
         await hallsRepository.CreateAsync(hall);

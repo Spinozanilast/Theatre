@@ -14,7 +14,7 @@ public class SectorsRepository(TheatreDbContext dbContext) : ISectorsRepository
         return await _dbContext.Sectors.FindAsync(id);
     }
 
-    public async Task<IList<Sector>> GetSectorsByHallId(int hallId)
+    public async Task<List<Sector>> GetSectorsByHallId(int hallId)
     {
         return await _dbContext.Sectors.AsNoTracking().Where(sector => sector.HallId == hallId).ToListAsync();
     }

@@ -9,4 +9,5 @@ public record TicketContract(
     int SeatNumber,
     decimal Price,
     DateTime EndsAt,
-    DateTime StartsAt);
+    DateTime StartsAt,
+    DateTime BookingTime);

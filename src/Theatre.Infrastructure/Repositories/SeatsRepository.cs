@@ -14,12 +14,12 @@ public class SeatsRepository(TheatreDbContext theatreDbContext): ISeatsRepositor
         return await _theatreDbContext.Seats.FindAsync(id);
     }
 
-    public async Task<IList<Seat>> GetSeatsByHallIdAsync(int hallId)
+    public async Task<List<Seat>> GetSeatsByHallIdAsync(int hallId)
     {
         return await _theatreDbContext.Seats.AsNoTracking().Where(seat => seat.HallId == hallId).ToListAsync();
     }
 
-    public async Task<IList<Seat>> GetSeatsBySectorIdAsync(int sectorId)
+    public async Task<List<Seat>> GetSeatsBySectorIdAsync(int sectorId)
     {
         return await _theatreDbContext.Seats.AsNoTracking().Where(seat => seat.SectorId == sectorId).ToListAsync();
     }

@@ -4,7 +4,7 @@ namespace Theatre.Application.Common.Interfaces;
 
 public interface ISectorsRepository
 {
-    Task<IList<Sector>> GetSectorsByHallId(int hallId);
+    Task<List<Sector>> GetSectorsByHallId(int hallId);
     Task<Sector?> GetByIdAsync(int id);
     Task CreateAsync(Sector sectorEntity);
     Task UpdateAsync(Sector sectorEntity);
