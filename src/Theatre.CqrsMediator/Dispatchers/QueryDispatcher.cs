@@ -6,16 +6,22 @@ namespace Theatre.CqrsMediator.Dispatchers;
 
 public class QueryDispatcher(IServiceProvider serviceProvider) : IQueryDispatcher, IQueryDispatcherWithCancellation
 {
-    public Task<TQueryOutput> Dispatch<TQueryOutput>(IReturnType<TQueryOutput> query, CancellationToken cancellation)
+    public Task<TQueryOutput> Dispatch<TQueryOutput>(IReturnType<TQueryOutput> query,
+        CancellationToken cancellationToken)
     {
-        var handler = serviceProvider
-            .GetRequiredService<IQueryHandlerWithCancellation<IReturnType<TQueryOutput>, TQueryOutput>>();
-        return handler.Handle(query, cancellation);
+        var handlerType = typeof(IQueryHandlerWithCancellation<,>)
+            .FillGenericInterfaceWithTwoParameters(query.GetType(), typeof(TQueryOutput));
+        var handler = (IQueryHandlerWithCancellation<IReturnType<TQueryOutput>, TQueryOutput>)serviceProvider
+            .GetRequiredService(handlerType);
+        return handler.Handle(query, cancellationToken);
     }
 
     public Task<TQueryOutput> Dispatch<TQueryOutput>(IReturnType<TQueryOutput> query)
     {
-        var handler = serviceProvider.GetRequiredService<IQueryHandler<IReturnType<TQueryOutput>, TQueryOutput>>();
+        var handlerType = typeof(IQueryHandler<,>)
+            .FillGenericInterfaceWithTwoParameters(query.GetType(), typeof(TQueryOutput));
+        var handler =
+            (IQueryHandler<IReturnType<TQueryOutput>, TQueryOutput>)serviceProvider.GetRequiredService(handlerType);
         return handler.Handle(query);
     }
 }

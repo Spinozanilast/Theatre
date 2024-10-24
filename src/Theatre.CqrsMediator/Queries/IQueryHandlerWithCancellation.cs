@@ -1,4 +1,6 @@
-﻿namespace Theatre.CqrsMediator.Queries;
+﻿using Theatre.CqrsMediator.Special;
+
+namespace Theatre.CqrsMediator.Queries;
 
 public interface IQueryHandlerWithCancellation<in TQuery, TQueryOutput>
 {

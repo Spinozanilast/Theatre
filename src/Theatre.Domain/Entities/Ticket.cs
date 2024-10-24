@@ -3,10 +3,10 @@ using Theatre.Domain.Entities.Special;
 
 namespace Theatre.Domain.Entities;
 
-public class Ticket : Entity, IUniqueSeatIndex<short>
+public class Ticket : Entity, IUniqueSeatIndex<int>
 {
-    public Ticket(Guid id, Guid eventId, Guid userId, short hallId, short sectorId, short rowNumber, short seatNumber,
-        decimal price, DateTime endsAt) : base(id)
+    public Ticket(Guid id, Guid eventId, Guid userId, int hallId, int sectorId, int rowNumber, int seatNumber,
+        decimal price, DateTime endsAt, DateTime startsAt) : base(id)
     {
         EventId = eventId;
         UserId = userId;
@@ -16,16 +16,22 @@ public class Ticket : Entity, IUniqueSeatIndex<short>
         SeatNumber = seatNumber;
         Price = price;
         EndsAt = endsAt;
+        StartsAt = startsAt;
     }
 
     public Guid EventId { get; set; }
+    private Event Event { get; set; }
     public Guid UserId { get; set; }
-    public DateTime EndsAt { get; set; }
-    public short HallId { get; set; }
-    public short SectorId { get; set; }
-    public short RowNumber { get; set; }
-    public short SeatNumber { get; set; }
+    private User User { get; set; }
+    public int HallId { get; set; }
+    private Hall Hall { get; set; }
+    public int SectorId { get; set; }
+    private Sector Sector { get; set; }
+    public int RowNumber { get; set; }
+    public int SeatNumber { get; set; }
     public decimal Price { get; set; }
+    public DateTime StartsAt { get; set; }
+    public DateTime EndsAt { get; set; }
 
     public bool IsPaid { get; } = false;
     public bool IsCancelled { get; } = false;
@@ -34,8 +40,8 @@ public class Ticket : Entity, IUniqueSeatIndex<short>
 
     public bool IsExpired => DateTime.UtcNow > EndsAt;
 
-    public void Update(Guid eventId, Guid userId, DateTime endsAt, short hallId, short sectorId, short rowNumber,
-        short seatNumber, decimal price)
+    public void Update(Guid eventId, Guid userId, DateTime endsAt, int hallId, int sectorId, int rowNumber,
+        int seatNumber, decimal price)
     {
         EventId = eventId;
         UserId = userId;

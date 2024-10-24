@@ -2,20 +2,21 @@
 
 namespace Theatre.Domain.Entities;
 
-public class Sector : AutoIncrementedEntity<short>
+public class Sector : AutoIncrementedEntity<int>
 {
-    public Sector(short hallId, short rowsCount, short seatsNum)
+    public Sector(int hallId, int rowsCount, int seatsNum)
     {
         HallId = hallId;
         RowsCount = rowsCount;
         SeatsNum = seatsNum;
     }
-    
-    public short HallId { get; private set; }
-    public short RowsCount { get; private set; }
-    public short SeatsNum { get; private set; }
-    
-    public void Update(short hallId, short rowsCount, short seatsNum)
+
+    public int HallId { get; private set; }
+    private Hall Hall { get; set; }
+    public int RowsCount { get; private set; }
+    public int SeatsNum { get; private set; }
+
+    public void Update(int hallId, int rowsCount, int seatsNum)
     {
         HallId = hallId;
         RowsCount = rowsCount;

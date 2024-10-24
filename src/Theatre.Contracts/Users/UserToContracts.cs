@@ -4,8 +4,8 @@ namespace Theatre.Contracts.Users;
 
 public static class UserToContracts
 {
-    public static UserResponse ToResponse(this User user)
+    public static UserContract ToResponse(this User user)
     {
-        return new UserResponse(user.FirstName, user.Email, user.PhoneNumber, user.VisitedEventsCount);
+        return new UserContract(user.FirstName, user.Email, user.PhoneNumber, user.VisitedEventsCount);
     }
 }

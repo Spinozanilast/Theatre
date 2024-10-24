@@ -9,14 +9,14 @@ public class SectorsRepository(TheatreDbContext dbContext) : ISectorsRepository
 {
     private readonly TheatreDbContext _dbContext = dbContext;
 
-    public async Task<Sector?> GetByIdAsync(short id)
+    public async Task<Sector?> GetByIdAsync(int id)
     {
         return await _dbContext.Sectors.FindAsync(id);
     }
 
-    public async Task<IList<Sector>> GetSectorsByHallId(short hallId)
+    public async Task<IList<Sector>> GetSectorsByHallId(int hallId)
     {
-        return await _dbContext.Sectors.Where(sector => sector.HallId == hallId).ToListAsync();
+        return await _dbContext.Sectors.AsNoTracking().Where(sector => sector.HallId == hallId).ToListAsync();
     }
 
     public async Task CreateAsync(Sector sectorEntity)
@@ -31,7 +31,7 @@ public class SectorsRepository(TheatreDbContext dbContext) : ISectorsRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(short id)
+    public async Task DeleteAsync(int id)
     {
         var sector = await GetByIdAsync(id);
         if (sector is not null)

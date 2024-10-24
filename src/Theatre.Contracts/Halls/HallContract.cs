@@ -1,6 +1,3 @@
 ﻿namespace Theatre.Contracts.Halls;
 
-public class HallContracts
-{
-    
-}
+public class HallContract(string Name, int seatsNum);

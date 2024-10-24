@@ -1,6 +1,3 @@
 ﻿namespace Theatre.Contracts.Sectors;
 
-public class SectorContract
-{
-    
-}
+public record SectorContract(int HallId, int RowsCount, int SeatsNumber);

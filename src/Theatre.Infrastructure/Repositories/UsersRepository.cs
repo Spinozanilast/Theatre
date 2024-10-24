@@ -11,7 +11,8 @@ public class UsersRepository(TheatreDbContext dbContext) : IUsersRepository
 
     public async Task<User?> GetByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken)
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber, cancellationToken);
+        return await _dbContext.Users.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber, cancellationToken);
     }
 
     public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -25,17 +26,12 @@ public class UsersRepository(TheatreDbContext dbContext) : IUsersRepository
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(User user, CancellationToken cancellationToken)
-    {
-        _dbContext.Update(user);
-        await _dbContext.SaveChangesAsync(cancellationToken);
-    }
-
     public async Task RemoveAsync(Guid userId, CancellationToken cancellationToken)
     {
         var user = await GetByIdAsync(userId, cancellationToken);
         if (user is not null)
         {
+            _dbContext.Remove(user);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }

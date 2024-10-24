@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using MediatR;
 using Theatre.Application.Common.Interfaces;
 using Theatre.CqrsMediator.Commands;
 using Theatre.CqrsMediator.Special;
@@ -31,7 +32,7 @@ public class CreateEventCommandHandler(
         {
             return Error.NotFound(description: "Hall not found");
         }
-
+        
         var eventEntity = new Event(
             Guid.NewGuid(),
             command.Name,

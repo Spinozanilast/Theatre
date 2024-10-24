@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Theatre.Application.Common.Interfaces;
 using Theatre.Domain.Entities;
 using Theatre.Infrastructure.Data;
@@ -10,20 +9,21 @@ public class EventsRepository(TheatreDbContext dbContext) : IEventsRepository
 {
     private readonly TheatreDbContext _dbContext = dbContext;
 
-    public async Task<List<Event>> GetEventsByHallAsync(short hallId)
+    public async Task<IList<Event>> GetEventsByHallAsync(int hallId)
     {
         return await _dbContext
-            .Events.Where(e => e.HallId == hallId).ToListAsync();
+            .Events.Where(e => e.HallId == hallId).AsNoTracking().ToListAsync();
     }
+
     public async Task<Event?> GetByIdAsync(Guid id)
     {
         return await _dbContext.Events.FindAsync(id);
     }
 
 
-    public async Task<List<Event>> GetAllAsync()
+    public async Task<IList<Event>> GetAllAsync()
     {
-        return await _dbContext.Events.ToListAsync();
+        return await _dbContext.Events.AsNoTracking().ToListAsync();
     }
 
     public async Task CreateAsync(Event eventEntity)

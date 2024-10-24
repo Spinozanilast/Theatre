@@ -5,12 +5,13 @@ using Theatre.Infrastructure.Data;
 
 namespace Theatre.Infrastructure.Repositories;
 
-public class TicketsRepository(TheatreDbContext dbContext): ITicketsRepository
+public class TicketsRepository(TheatreDbContext dbContext) : ITicketsRepository
 {
     private readonly TheatreDbContext _dbContext = dbContext;
-    public async Task<IList<Ticket?>> GetTicketsByUserIdAsync(Guid userId)
+
+    public async Task<IList<Ticket>> GetTicketsByUserIdAsync(Guid userId)
     {
-        return await _dbContext.Tickets.Where(ticket => ticket.UserId == userId).ToListAsync();
+        return await _dbContext.Tickets.AsNoTracking().Where(ticket => ticket.UserId == userId).ToListAsync();
     }
 
     public async Task<Ticket?> GetByIdAsync(Guid id)

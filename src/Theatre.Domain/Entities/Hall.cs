@@ -2,16 +2,17 @@
 
 namespace Theatre.Domain.Entities;
 
-public class Hall : AutoIncrementedEntity<short>
+public class Hall : AutoIncrementedEntity<int>
 {
-    public Hall(int seatsNum, string hallName)
+    public Hall(int seatsNumber, string hallName)
     {
-        SeatsNumber = seatsNum;
+        SeatsNumber = seatsNumber;
         HallName = hallName;
     }
 
     public int SeatsNumber { get; private set; }
     public string HallName { get; private set; }
+    
     
     public void Update(int seatsNum, string hallName)
     {

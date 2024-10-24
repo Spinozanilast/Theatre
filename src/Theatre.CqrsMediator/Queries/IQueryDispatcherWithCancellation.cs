@@ -3,7 +3,7 @@ using Theatre.CqrsMediator.Special;
 
 namespace Theatre.CqrsMediator.Queries;
 
-public interface IQueryDispatcherWithCancellation
+public interface   IQueryDispatcherWithCancellation
 {
-    Task<TQueryOutput> Dispatch<TQueryOutput>(IReturnType<TQueryOutput> query, CancellationToken cancellation);
+    Task<TQueryOutput> Dispatch<TQueryOutput>(IReturnType<TQueryOutput> query, CancellationToken cancellationToken);
 }

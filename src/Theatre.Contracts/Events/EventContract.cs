@@ -3,7 +3,7 @@ using Theatre.Domain.Entities.Special;
 
 namespace Theatre.Contracts.Events;
 
-public record EventResponse(
+public record EventContract(
     string Name,
     string Description,
     DateTime DateTime,

@@ -1,9 +1,15 @@
-﻿namespace Theatre.Domain.Entities.Enums;
+﻿using Theatre.Domain.Common;
 
-public enum SeatType
+namespace Theatre.Domain.Entities.Enumerations;
+
+public class SeatType : Enumeration
 {
-    Standard,
-    Premium,
-    Vip,
-    Pair
+    public static SeatType Standard = new(1, nameof(Standard));
+    public static SeatType Premium = new(2, nameof(Premium));
+    public static SeatType Vip = new(3, nameof(Vip));
+    public static SeatType Pair = new(4, nameof(Pair));
+
+    public SeatType(int id, string name) : base(id, name)
+    {
+    }
 }

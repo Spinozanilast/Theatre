@@ -6,4 +6,5 @@ public interface ICommandDispatcherWithCancellation
 
 {
     Task<TCommandOutput> Dispatch<TCommandOutput>(IReturnType<TCommandOutput> command, CancellationToken cancellation);
+    Task Dispatch(IReturnType command, CancellationToken cancellation);
 }

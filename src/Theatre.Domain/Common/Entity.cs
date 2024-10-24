@@ -7,5 +7,9 @@ public class Entity
         Id = id;
     }
 
+    protected Entity()
+    {
+    }
+
     public Guid Id { get; private set; }
 }

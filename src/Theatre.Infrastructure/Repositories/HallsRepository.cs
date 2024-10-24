@@ -5,17 +5,18 @@ using Theatre.Infrastructure.Data;
 
 namespace Theatre.Infrastructure.Repositories;
 
-public class HallsRepository(TheatreDbContext theatreDbContext): IHallsRepository
+public class HallsRepository(TheatreDbContext theatreDbContext) : IHallsRepository
 {
     private readonly TheatreDbContext _theatreDbContext = theatreDbContext;
-    public async Task<Hall?> GetByIdAsync(short id)
+
+    public async Task<Hall?> GetByIdAsync(int id)
     {
         return await _theatreDbContext.Halls.FindAsync(id);
     }
 
-    public async Task<List<Hall>> GetAllAsync()
+    public async Task<IList<Hall>> GetAllAsync()
     {
-        return await _theatreDbContext.Halls.ToListAsync();
+        return await _theatreDbContext.Halls.AsNoTracking().ToListAsync();
     }
 
     public async Task CreateAsync(Hall hallEntity)
@@ -30,7 +31,7 @@ public class HallsRepository(TheatreDbContext theatreDbContext): IHallsRepositor
         await _theatreDbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(short id)
+    public async Task DeleteAsync(int id)
     {
         var hall = await GetByIdAsync(id);
         if (hall is not null)
