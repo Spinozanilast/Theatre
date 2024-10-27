@@ -45,6 +45,10 @@ namespace Theatre.Infrastructure.Data.Migrations
                     b.Property<int>("HallId")
                         .HasColumnType("integer");
 
+                    b.Property<string[]>("ImageUrls")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -153,6 +157,9 @@ namespace Theatre.Infrastructure.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("BookingTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("EndsAt")
                         .HasColumnType("timestamp with time zone");

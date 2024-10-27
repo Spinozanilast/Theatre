@@ -47,6 +47,7 @@ namespace Theatre.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    ImageUrls = table.Column<string[]>(type: "text[]", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     DateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EventType = table.Column<string>(type: "text", nullable: false),
@@ -148,7 +149,8 @@ namespace Theatre.Infrastructure.Data.Migrations
                     SeatNumber = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     StartsAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EndsAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    EndsAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    BookingTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -9,6 +9,7 @@ namespace Theatre.Application.Features.Events.Commands;
 
 public record CreateEventCommand(
     string Name,
+    string[] ImagesUrls,
     string Description,
     DateTime Date,
     int HallId,
@@ -39,7 +40,8 @@ public class CreateEventCommandHandler(
             true,
             command.EventType,
             command.EventCast,
-            command.Description);
+            command.Description,
+            command.ImagesUrls);
 
         await eventsRepository.CreateAsync(eventEntity);
         await unitOfWork.CommitChangesAsync(cancellationToken);

@@ -12,7 +12,7 @@ using Theatre.Infrastructure.Data;
 namespace Theatre.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(TheatreDbContext))]
-    [Migration("20241023080210_InitTheatreMigration")]
+    [Migration("20241026140013_InitTheatreMigration")]
     partial class InitTheatreMigration
     {
         /// <inheritdoc />
@@ -47,6 +47,10 @@ namespace Theatre.Infrastructure.Data.Migrations
 
                     b.Property<int>("HallId")
                         .HasColumnType("integer");
+
+                    b.Property<string[]>("ImageUrls")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -156,6 +160,9 @@ namespace Theatre.Infrastructure.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("BookingTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("EndsAt")
                         .HasColumnType("timestamp with time zone");

@@ -4,10 +4,10 @@ namespace Theatre.Contracts.Events;
 
 public static class EventToContracts
 {
-    public static EventContract ToResponse(this Event @event)
+    public static EventContract ToResponse(this Event eventEntity)
     {
-        return new EventContract(@event.Name, @event.Description, @event.DateTime, @event.EventType,
-            @event.HallId,
-            @event.Price, @event.EventCast, @event.EventState);
+        return new EventContract(eventEntity.Name, eventEntity.ImageUrls ,eventEntity.Description, eventEntity.DateTime, eventEntity.EventType,
+            eventEntity.HallId,
+            eventEntity.Price, eventEntity.EventCast, eventEntity.EventState);
     }
 }

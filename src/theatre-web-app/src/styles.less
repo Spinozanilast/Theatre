@@ -1,1 +1,89 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Fira Sans';
+    font-weight: 400;
+    src: url(assets/fonts/FiraSans-Regular.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'Fira Sans';
+    font-weight: 600;
+    src: url(assets/fonts/FiraSans-SemiBold.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'Geologica';
+    src: url(assets/fonts/Geologica.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto Serif';
+    font-style: italic;
+    src: url(assets/fonts/RobotoSerif-Italic.woff2) format('woff2');
+}
+
+:root {
+    /* Color palette
+    preview in https://www.realtimecolors.com/?colors=ffffff-111111-f44034-971414-fc2525&fonts=Inter-Inter
+    */
+    --text: #fff;
+    --text-transparent: rgba(255, 255, 255, 0.85);
+    --background: #111;
+    --primary: #f44034;
+    --secondary: #971414;
+    --accent: #fc2525;
+
+    --event-card-back: linear-gradient(
+        90deg,
+        #97141415 10%,
+        hsla(1, 92%, 47%, 0.1) 100%
+    );
+
+    --radial-gradient-back: radial-gradient(
+        circle,
+        rgba(17, 16, 0, 0.2) 30%,
+        var(--primary) 100%
+    );
+
+    --event-card-back-description: linear-gradient(
+        90deg,
+        #11111140 40%,
+        #1d1d1d70 100%
+    );
+
+    --event-card-background: #1c1313;
+
+    --border-color: #ffffff20;
+    --footer-color: #1d1d1d;
+    --standard-border-radius: 8px;
+    --standard-border: 1px solid var(--border-color);
+
+    --content-margin: 1em;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    color: var(--text);
+    background-color: var(--background);
+}
+
+a {
+    font-family: 'Fira Sans';
+    font-weight: 600;
+    color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Roboto Serif';
+    font-weight: 400;
+}

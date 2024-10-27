@@ -5,6 +5,7 @@ namespace Theatre.Contracts.Events;
 
 public record EventContract(
     string Name,
+    string[] ImageUrls,
     string Description,
     DateTime DateTime,
     EventType EventType,

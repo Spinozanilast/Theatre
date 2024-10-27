@@ -1,0 +1,12 @@
+<section class="section">
+    <div class="section__header">
+        <hr />
+        <h1 class="section__title">События</h1>
+        <hr />
+    </div>
+    <div class="event-container">
+        @for (event of events; track event.title) {
+            <app-event-card [event]="event"></app-event-card>
+        }
+    </div>
+</section>
