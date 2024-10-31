@@ -16,10 +16,8 @@ public class EventsConfiguration : IEntityTypeConfiguration<Event>
             .HasConversion(subscriptionType => subscriptionType.Name,
                 value => Enumeration.EnumFromName<EventType>(value));
 
-        builder
-            .ConfigureOneToOneRelationship<Event, Hall>(
-                nameof(Hall),
-                s => s.HallId);
+        builder.Property(e => e.ImageUrls)
+            .IsUnicode(false);
 
         builder
             .OwnsOne<EventCast>(e => e.EventCast)

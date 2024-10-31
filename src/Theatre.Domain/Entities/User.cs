@@ -1,4 +1,5 @@
-﻿using Theatre.Domain.Common;
+﻿using System.Collections.ObjectModel;
+using Theatre.Domain.Common;
 
 namespace Theatre.Domain.Entities;
 
@@ -16,6 +17,7 @@ public class User : Entity
     public string PhoneNumber { get; private set; }
     public string Email { get; private set; }
     public string FirstName { get; private set; }
+    
     public int VisitedEventsCount { get; private set; } = 0;
 
     public void Update(string email, string phoneNumber, string firstName)

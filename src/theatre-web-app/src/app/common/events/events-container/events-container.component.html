@@ -1,0 +1,15 @@
+<div class="event-container">
+    @for (event of events; track event.name) {
+        <app-event-card
+            [event]="event"
+            (isModalVisibleChange)="onIsModalVisibleChange($event)"
+        ></app-event-card>
+    }
+</div>
+
+@if (isModalVisible) {
+    <app-buy-ticket-dialog
+        [event]="selectedEvent!"
+        (close)="hideBuyTicketDialog()"
+    ></app-buy-ticket-dialog>
+}

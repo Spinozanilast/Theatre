@@ -9,22 +9,15 @@ namespace Theatre.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class HallsController : ControllerBase
+public class HallsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public HallsController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [Authorize]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(HallContract))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateHallCommand command)
     {
-        var result = await _mediator.Send(command);
+        var result = await mediator.Send(command);
         return result.Match<IActionResult>(
             hall => CreatedAtAction(nameof(Get), new { hallId = hall.Id }, hall.ToResponse()),
             BadRequest);
@@ -37,7 +30,7 @@ public class HallsController : ControllerBase
     public async Task<IActionResult> Update([FromRoute] int hallId, [FromBody] UpdateHallCommand hallEntity)
     {
         var updateHallCommand = hallEntity with { Id = hallId };
-        await _mediator.Send(updateHallCommand);
+        await mediator.Send(updateHallCommand);
         return Ok();
     }
 
@@ -48,7 +41,7 @@ public class HallsController : ControllerBase
     public async Task<IActionResult> Remove([FromRoute] int hallId)
     {
         var deleteHallCommand = new DeleteHallCommand(hallId);
-        await _mediator.Send(deleteHallCommand);
+        await mediator.Send(deleteHallCommand);
         return Ok();
     }
 
@@ -58,7 +51,7 @@ public class HallsController : ControllerBase
     public async Task<IActionResult> Get([FromRoute] int hallId)
     {
         var getHallByIdQuery = new GetHallByIdQuery(hallId);
-        var result = await _mediator.Send(getHallByIdQuery);
+        var result = await mediator.Send(getHallByIdQuery);
         return result.Match<IActionResult>(
             hall => Ok(hall.ToResponse()),
             NotFound);
@@ -69,7 +62,7 @@ public class HallsController : ControllerBase
     public async Task<IActionResult> Get()
     {
         var getAllHallsQuery = new GetAllHallsQuery();
-        var halls = await _mediator.Send(getAllHallsQuery);
+        var halls = await mediator.Send(getAllHallsQuery);
         return Ok(halls.Select(hall => hall.ToResponse()).ToList());
     }
 }

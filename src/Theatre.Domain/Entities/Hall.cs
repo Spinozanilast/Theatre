@@ -1,4 +1,5 @@
-﻿using Theatre.Domain.Common;
+﻿using System.Collections.ObjectModel;
+using Theatre.Domain.Common;
 
 namespace Theatre.Domain.Entities;
 
@@ -12,7 +13,6 @@ public class Hall : AutoIncrementedEntity<int>
 
     public int SeatsNumber { get; private set; }
     public string HallName { get; private set; }
-    
     
     public void Update(int seatsNum, string hallName)
     {

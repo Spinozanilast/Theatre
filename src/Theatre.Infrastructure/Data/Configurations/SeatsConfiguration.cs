@@ -16,19 +16,13 @@ public class SeatsConfiguration : IEntityTypeConfiguration<Seat>
             .HasDatabaseName("Unique_Seat");
 
         builder
-            .ConfigureOneToOneRelationship<Seat, Hall>(
-                nameof(Hall),
-                s => s.HallId);
-
-        builder
-            .ConfigureOneToOneRelationship<Seat, Sector>(
-                nameof(Sector),
-                s => s.SectorId);
-
-        builder
             .Property(s => s.SeatType)
             .HasConversion(
                 enumInstance => enumInstance.Name,
                 name => Enumeration.EnumFromName<SeatType>(name));
+        
+        builder
+            .HasIndex(s => new { s.HallId, s.RowNumber })
+            .HasDatabaseName("IX_Seats_HallId_RowNumber");
     }
 }

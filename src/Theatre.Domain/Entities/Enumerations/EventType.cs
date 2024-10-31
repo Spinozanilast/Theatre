@@ -4,6 +4,7 @@ namespace Theatre.Domain.Entities.Enumerations;
 
 public class EventType : Enumeration
 {
+    public static EventType Opera = new(1, nameof(Opera));
     public static EventType Drama = new(1, nameof(Drama));
     public static EventType Comedy = new(2, nameof(Comedy));
     public static EventType Ballet = new(3, nameof(Ballet));

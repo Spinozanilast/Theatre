@@ -9,22 +9,14 @@ namespace Theatre.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class SeatsController : ControllerBase
+public class SeatsController(IMediator mediator) : ControllerBase
 {
-    
-    private readonly IMediator _mediator;
-
-    public SeatsController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-    
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SeatContract))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateSeatCommand commandEntity)
     {
-        var result = await _mediator.Send(commandEntity);
+        var result = await mediator.Send(commandEntity);
         return result.Match<IActionResult>(
             seat => CreatedAtAction(nameof(Get), new { hallId = seat.Id }, seat.ToContract()),
             BadRequest);
@@ -37,7 +29,7 @@ public class SeatsController : ControllerBase
     public async Task<IActionResult> Update([FromRoute] int seatId, [FromBody] UpdateSeatCommand seatEntity)
     {
         var updateSeatCommand = seatEntity with { Id = seatId };
-        await _mediator.Send(updateSeatCommand);
+        await mediator.Send(updateSeatCommand);
         return Ok();
     }
     
@@ -48,7 +40,7 @@ public class SeatsController : ControllerBase
     public async Task<IActionResult> Remove([FromRoute] int seatId)
     {
         var deleteSeatCommand = new DeleteSeatCommand(seatId);
-        await _mediator.Send(deleteSeatCommand);
+        await mediator.Send(deleteSeatCommand);
         return Ok();
     }
     
@@ -58,7 +50,7 @@ public class SeatsController : ControllerBase
     public async Task<IActionResult> Get([FromRoute] int seatId)
     {
         var getSeatById = new GetSeatByIdQuery(seatId);
-        var result = await _mediator.Send(getSeatById);
+        var result = await mediator.Send(getSeatById);
         return result.Match<IActionResult>(
             seat => Ok(seat.ToContract()),
             NotFound);
@@ -69,7 +61,7 @@ public class SeatsController : ControllerBase
     public async Task<IActionResult> GetBySectorId([FromRoute] int sectorId)
     {
         var getHallByIdQuery = new GetSeatsBySectorIdQuery(sectorId);
-        var seats = await _mediator.Send(getHallByIdQuery);
+        var seats = await mediator.Send(getHallByIdQuery);
         return Ok(seats.Select(seat => seat.ToContract()).ToList());
     }
     
@@ -78,7 +70,7 @@ public class SeatsController : ControllerBase
     public async Task<IActionResult> GetByHallId([FromRoute] int hallId)
     {
         var getSeatsByHallId = new GetSeatsByHallIdQuery(hallId);
-        var seats = await _mediator.Send(getSeatsByHallId);
+        var seats = await mediator.Send(getSeatsByHallId);
         return Ok(seats.Select(seat => seat.ToContract()).ToList());
     }
 }

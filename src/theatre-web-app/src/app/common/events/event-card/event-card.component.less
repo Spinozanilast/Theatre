@@ -43,6 +43,14 @@
     &:not(:hover) {
         animation: show-overflow 3s forwards;
     }
+
+    &:hover .event-card__image {
+        transform: scale(0.9);
+    }
+
+    &:hover .event-card__image::after {
+        opacity: 0.2;
+    }
 }
 
 span {
@@ -89,9 +97,12 @@ span {
 }
 
 .event-card__image {
+    overflow-y: hidden;
     max-width: 100%;
-    object-fit: cover;
-    padding: 0.7em;
+    height: 45em;
+    object-fit: contain;
+    padding: 1em;
+    transition: all 1.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
 .event-card__footer {
@@ -112,6 +123,7 @@ span {
 /* **********************************Buttons********************************** */
 
 .event-card__footer-button {
+    white-space: nowrap;
     color: var(--text-transparent);
     padding: 1.25ch 2.5ch;
     background: transparent;
@@ -183,5 +195,20 @@ span {
     }
     50% {
         overflow: hidden;
+    }
+}
+
+/* **********************************Media queries********************************** */
+
+@media screen and (min-width: 1200px) {
+    .event-card__footer-data {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .event-card__image {
+        max-width: 100%;
+        height: 30em;
+        padding: 0.2em;
     }
 }

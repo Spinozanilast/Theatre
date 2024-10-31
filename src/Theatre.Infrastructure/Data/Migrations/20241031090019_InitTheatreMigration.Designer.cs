@@ -12,7 +12,7 @@ using Theatre.Infrastructure.Data;
 namespace Theatre.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(TheatreDbContext))]
-    [Migration("20241026140013_InitTheatreMigration")]
+    [Migration("20241031090019_InitTheatreMigration")]
     partial class InitTheatreMigration
     {
         /// <inheritdoc />
@@ -91,6 +91,28 @@ namespace Theatre.Infrastructure.Data.Migrations
                     b.ToTable("Halls");
                 });
 
+            modelBuilder.Entity("Theatre.Domain.Entities.Row", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("HallId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SeatsNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SectorId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rows");
+                });
+
             modelBuilder.Entity("Theatre.Domain.Entities.Seat", b =>
                 {
                     b.Property<int>("Id")
@@ -100,6 +122,12 @@ namespace Theatre.Infrastructure.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("HallId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsOccupied")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("RowId")
                         .HasColumnType("integer");
 
                     b.Property<int>("RowNumber")
@@ -117,11 +145,10 @@ namespace Theatre.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HallId")
-                        .IsUnique();
+                    b.HasIndex("RowId");
 
-                    b.HasIndex("SectorId")
-                        .IsUnique();
+                    b.HasIndex("HallId", "RowNumber")
+                        .HasDatabaseName("IX_Seats_HallId_RowNumber");
 
                     b.HasIndex("HallId", "SectorId", "RowNumber", "SeatNumber")
                         .IsUnique()
@@ -148,9 +175,6 @@ namespace Theatre.Infrastructure.Data.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HallId")
-                        .IsUnique();
 
                     b.ToTable("Sectors");
                 });
@@ -284,32 +308,9 @@ namespace Theatre.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Theatre.Domain.Entities.Seat", b =>
                 {
-                    b.HasOne("Theatre.Domain.Entities.Hall", "Hall")
-                        .WithOne()
-                        .HasForeignKey("Theatre.Domain.Entities.Seat", "HallId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Theatre.Domain.Entities.Sector", "Sector")
-                        .WithOne()
-                        .HasForeignKey("Theatre.Domain.Entities.Seat", "SectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hall");
-
-                    b.Navigation("Sector");
-                });
-
-            modelBuilder.Entity("Theatre.Domain.Entities.Sector", b =>
-                {
-                    b.HasOne("Theatre.Domain.Entities.Hall", "Hall")
-                        .WithOne()
-                        .HasForeignKey("Theatre.Domain.Entities.Sector", "HallId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hall");
+                    b.HasOne("Theatre.Domain.Entities.Row", null)
+                        .WithMany("Seats")
+                        .HasForeignKey("RowId");
                 });
 
             modelBuilder.Entity("Theatre.Domain.Entities.Ticket", b =>
@@ -345,6 +346,11 @@ namespace Theatre.Infrastructure.Data.Migrations
                     b.Navigation("Sector");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Theatre.Domain.Entities.Row", b =>
+                {
+                    b.Navigation("Seats");
                 });
 #pragma warning restore 612, 618
         }

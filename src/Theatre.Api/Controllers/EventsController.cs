@@ -11,15 +11,8 @@ namespace Theatre.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class EventsController : ControllerBase
+public class EventsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public EventsController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [Authorize]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(EventContract))]
@@ -31,7 +24,7 @@ public class EventsController : ControllerBase
             return BadRequest("Invalid event type");
         }
 
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
         return result.Match<IActionResult>(
             eventEntity => CreatedAtAction(nameof(Get), new { eventId = eventEntity.Id }, eventEntity.ToResponse()),
             BadRequest);
@@ -45,7 +38,7 @@ public class EventsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var updateEventCommand = eventEntity with { EventId = eventId };
-        await _mediator.Send(updateEventCommand, cancellationToken);
+        await mediator.Send(updateEventCommand, cancellationToken);
         return Ok();
     }
 
@@ -56,7 +49,7 @@ public class EventsController : ControllerBase
     public async Task<IActionResult> Remove([FromRoute] Guid eventId, CancellationToken cancellationToken)
     {
         var deleteEventCommand = new DeleteEventCommand(eventId);
-        await _mediator.Send(deleteEventCommand, cancellationToken);
+        await mediator.Send(deleteEventCommand, cancellationToken);
         return Ok();
     }
 
@@ -65,7 +58,7 @@ public class EventsController : ControllerBase
     public async Task<IActionResult> Get([FromRoute] int hallId, CancellationToken cancellationToken)
     {
         var getUserByIdQuery = new GetEventsByHallIdQuery(hallId);
-        var events = await _mediator.Send(getUserByIdQuery, cancellationToken);
+        var events = await mediator.Send(getUserByIdQuery, cancellationToken);
         return Ok(events.Select(eventEntity => eventEntity.ToResponse()).ToList());
     }
 
@@ -75,7 +68,7 @@ public class EventsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var getAllEventsQuery = new GetAllEventsQuery();
-        var events = await _mediator.Send(getAllEventsQuery, cancellationToken);
+        var events = await mediator.Send(getAllEventsQuery, cancellationToken);
         return Ok(events.Select(eventEntity => eventEntity.ToResponse()).ToList());
     }
 }

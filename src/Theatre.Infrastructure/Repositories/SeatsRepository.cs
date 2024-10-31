@@ -5,10 +5,10 @@ using Theatre.Infrastructure.Data;
 
 namespace Theatre.Infrastructure.Repositories;
 
-public class SeatsRepository(TheatreDbContext theatreDbContext): ISeatsRepository
+public class SeatsRepository(TheatreDbContext theatreDbContext) : ISeatsRepository
 {
     private readonly TheatreDbContext _theatreDbContext = theatreDbContext;
-    
+
     public async Task<Seat?> GetByIdAsync(int id)
     {
         return await _theatreDbContext.Seats.FindAsync(id);
@@ -16,7 +16,8 @@ public class SeatsRepository(TheatreDbContext theatreDbContext): ISeatsRepositor
 
     public async Task<List<Seat>> GetSeatsByHallIdAsync(int hallId)
     {
-        return await _theatreDbContext.Seats.AsNoTracking().Where(seat => seat.HallId == hallId).ToListAsync();
+        return await _theatreDbContext.Seats.AsNoTracking().Where(seat => seat.HallId == hallId).OrderBy(s => hallId)
+            .ThenBy(s => s.SectorId).ThenBy(s => s.RowNumber).ThenBy(s => s.SeatNumber).ToListAsync();
     }
 
     public async Task<List<Seat>> GetSeatsBySectorIdAsync(int sectorId)

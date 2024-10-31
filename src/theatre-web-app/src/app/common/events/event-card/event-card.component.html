@@ -1,7 +1,7 @@
 <div class="event-card">
     <div class="event-card__header">
         <h3 class="event-card__type">{{ event.eventType }}</h3>
-        <h2 class="event-card__title">{{ event.title }}</h2>
+        <h2 class="event-card__title">{{ event.name }}</h2>
         <h3 class="event-card__datetime">
             {{ event.dateTime | date: 'mediumDate' }}
             {{ event.dateTime | date: 'shortTime' }}
@@ -10,8 +10,8 @@
     <div class="event-card__image-container">
         <img
             class="event-card__image"
-            [alt]="event.title | altPipe"
-            src="{{ event.imageUrl }}"
+            [alt]="event.name | altPipe"
+            src="{{ event.imageUrls[0] }}"
         />
         <div class="event-card__description description-container">
             <div class="event-card__description-category">
@@ -36,7 +36,12 @@
     </div>
     @if (event.eventState) {
         <div class="event-card__footer">
-            <button class="event-card__footer-button">Купить билет</button>
+            <button
+                class="event-card__footer-button"
+                (click)="showBuyTicketDialog()"
+            >
+                Купить билет
+            </button>
             <div class="event-card__footer-data">
                 <p><span>Зал: </span> {{ event.hallId }}</p>
                 <p><span>Стоимость: </span> {{ event.price }} BYN</p>

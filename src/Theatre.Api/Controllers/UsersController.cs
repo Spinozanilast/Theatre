@@ -9,21 +9,14 @@ namespace Theatre.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UsersController : ControllerBase
+public class UsersController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public UsersController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserContract))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
         return CreatedAtAction(nameof(Get), new { userId = result.Id }, result.ToResponse());
     }
 
@@ -35,7 +28,7 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Remove([FromRoute] Guid userId, CancellationToken cancellationToken)
     {
         var deleteUserByIdCommand = new RemoveUserCommand(userId);
-        await _mediator.Send(deleteUserByIdCommand, cancellationToken);
+        await mediator.Send(deleteUserByIdCommand, cancellationToken);
         return NoContent();
     }
 
@@ -45,7 +38,7 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Get([FromRoute] Guid userId, CancellationToken cancellationToken)
     {
         var getUserByIdQuery = new GetUserByIdQuery(userId);
-        var result = await _mediator.Send(getUserByIdQuery, cancellationToken);
+        var result = await mediator.Send(getUserByIdQuery, cancellationToken);
         return result.Match<IActionResult>(
             user => Ok(),
             NotFound);
@@ -57,7 +50,7 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Get([FromRoute] string phoneNumber, CancellationToken cancellationToken)
     {
         var getUserByphoneNumberQuery = new GetUserByPhoneNumberQuery(phoneNumber);
-        var result = await _mediator.Send(getUserByphoneNumberQuery, cancellationToken);
+        var result = await mediator.Send(getUserByphoneNumberQuery, cancellationToken);
         return result.Match<IActionResult>(
             user => Ok(),
             NotFound);

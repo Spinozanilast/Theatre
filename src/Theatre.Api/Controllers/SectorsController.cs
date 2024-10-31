@@ -10,21 +10,14 @@ namespace Theatre.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class SectorsController : ControllerBase
+public class SectorsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public SectorsController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-    
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(SectorContract))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateSectorCommand createSectorCommand)
     {
-        var result = await _mediator.Send(createSectorCommand);
+        var result = await mediator.Send(createSectorCommand);
         return result.Match<IActionResult>(
             sector => CreatedAtAction(nameof(Get), new { sectorId = sector.Id }, sector.ToContract()),
             BadRequest);
@@ -36,7 +29,7 @@ public class SectorsController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] int sectorId)
     {
         var deleteSectorCommand = new DeleteSectorCommand(sectorId);
-        await _mediator.Send(deleteSectorCommand);
+        await mediator.Send(deleteSectorCommand);
         return NoContent();
     }
     
@@ -48,7 +41,7 @@ public class SectorsController : ControllerBase
     {
         var updateSectorCommand =
             sectorEntity with { Id = sectorId };
-        var result = await _mediator.Send(updateSectorCommand);
+        var result = await mediator.Send(updateSectorCommand);
         return result.Match<IActionResult>(
             _ => Ok(),
             BadRequest);
@@ -61,7 +54,7 @@ public class SectorsController : ControllerBase
     public async Task<IActionResult> Get([FromRoute] int sectorId)
     {
         var getSectorByIdQuery = new GetSectorByIdQuery(sectorId);
-        var result = await _mediator.Send(getSectorByIdQuery);
+        var result = await mediator.Send(getSectorByIdQuery);
         return result.Match<IActionResult>(
             Ok,
             NotFound);
@@ -72,7 +65,7 @@ public class SectorsController : ControllerBase
     public async Task<IActionResult> GetAllByHallId([FromRoute] int hallId)
     {
         var getSectorsByHallIdQuery = new GetSectorsByHallIdQuery(hallId);
-        var sectors = await _mediator.Send(getSectorsByHallIdQuery);
+        var sectors = await mediator.Send(getSectorsByHallIdQuery);
         return Ok(sectors.Select(sector => sector.ToContract()).ToList());
     }
 }

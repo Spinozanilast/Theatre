@@ -8,7 +8,7 @@ public record EventContract(
     string[] ImageUrls,
     string Description,
     DateTime DateTime,
-    EventType EventType,
+    string EventType,
     int HallId,
     decimal Price,
     EventCast EventCast,

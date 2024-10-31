@@ -24,6 +24,8 @@ public class Seat : AutoIncrementedEntity<int>, IUniqueSeatIndex<int>
     public int RowNumber { get; private set; }
     public int SeatNumber { get; private set; }
     public SeatType SeatType { get; private set; }
+    
+    public bool IsOccupied { get; private set; }
 
     public void Update(int hallId, int sectorId, int rowNumber, int seatNumber, SeatType seatType)
     {
@@ -32,5 +34,10 @@ public class Seat : AutoIncrementedEntity<int>, IUniqueSeatIndex<int>
         RowNumber = rowNumber;
         SeatNumber = seatNumber;
         SeatType = seatType;
+    }
+
+    public void Occupy()
+    {
+        IsOccupied = true;
     }
 }

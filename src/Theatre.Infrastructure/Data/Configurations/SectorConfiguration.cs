@@ -8,9 +8,5 @@ public class SectorConfiguration : IEntityTypeConfiguration<Sector>
 {
     public void Configure(EntityTypeBuilder<Sector> builder)
     {
-        builder
-            .ConfigureOneToOneRelationship<Sector, Hall>(
-                nameof(Hall),
-                s => s.HallId);
     }
 }

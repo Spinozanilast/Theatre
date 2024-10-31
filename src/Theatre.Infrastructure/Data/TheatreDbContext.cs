@@ -10,6 +10,7 @@ public class TheatreDbContext(DbContextOptions options) : DbContext(options), IU
     public DbSet<User> Users { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
     public DbSet<Sector> Sectors { get; set; }
+    public DbSet<Row> Rows { get; set; }
     public DbSet<Seat> Seats { get; set; }
     public DbSet<Hall> Halls { get; set; }
     public DbSet<Event> Events { get; set; }
