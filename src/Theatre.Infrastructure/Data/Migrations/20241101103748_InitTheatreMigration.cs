@@ -13,6 +13,25 @@ namespace Theatre.Infrastructure.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Events",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ImageUrls = table.Column<string[]>(type: "text[]", unicode: false, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EventType = table.Column<string>(type: "text", nullable: false),
+                    HallId = table.Column<int>(type: "integer", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    EventState = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Halls",
                 columns: table => new
                 {
@@ -27,33 +46,17 @@ namespace Theatre.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rows",
+                name: "SeatTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    HallId = table.Column<int>(type: "integer", nullable: false),
-                    SectorId = table.Column<int>(type: "integer", nullable: false),
-                    SeatsNumber = table.Column<int>(type: "integer", nullable: false)
+                    SeatType = table.Column<string>(type: "text", nullable: false),
+                    Multiplier = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rows", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sectors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    HallId = table.Column<int>(type: "integer", nullable: false),
-                    RowsCount = table.Column<int>(type: "integer", nullable: false),
-                    SeatsNum = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sectors", x => x.Id);
+                    table.PrimaryKey("PK_SeatTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,55 +75,6 @@ namespace Theatre.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    ImageUrls = table.Column<string[]>(type: "text[]", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EventType = table.Column<string>(type: "text", nullable: false),
-                    HallId = table.Column<int>(type: "integer", nullable: false),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false),
-                    EventState = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Events_Halls_HallId",
-                        column: x => x.HallId,
-                        principalTable: "Halls",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Seats",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    HallId = table.Column<int>(type: "integer", nullable: false),
-                    SectorId = table.Column<int>(type: "integer", nullable: false),
-                    RowNumber = table.Column<int>(type: "integer", nullable: false),
-                    SeatNumber = table.Column<int>(type: "integer", nullable: false),
-                    SeatType = table.Column<string>(type: "text", nullable: false),
-                    IsOccupied = table.Column<bool>(type: "boolean", nullable: false),
-                    RowId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Seats", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Seats_Rows_RowId",
-                        column: x => x.RowId,
-                        principalTable: "Rows",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EventCasts",
                 columns: table => new
                 {
@@ -136,6 +90,55 @@ namespace Theatre.Infrastructure.Data.Migrations
                         name: "FK_EventCasts_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sectors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    HallId = table.Column<int>(type: "integer", nullable: false),
+                    RowsCount = table.Column<int>(type: "integer", nullable: false),
+                    SeatsNum = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sectors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sectors_Halls_HallId",
+                        column: x => x.HallId,
+                        principalTable: "Halls",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rows",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    HallId = table.Column<int>(type: "integer", nullable: false),
+                    SectorId = table.Column<int>(type: "integer", nullable: false),
+                    RowNumber = table.Column<int>(type: "integer", nullable: false),
+                    SeatsNumber = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rows", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rows_Halls_HallId",
+                        column: x => x.HallId,
+                        principalTable: "Halls",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Rows_Sectors_SectorId",
+                        column: x => x.SectorId,
+                        principalTable: "Sectors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -185,11 +188,33 @@ namespace Theatre.Infrastructure.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Events_HallId",
-                table: "Events",
-                column: "HallId",
-                unique: true);
+            migrationBuilder.CreateTable(
+                name: "Seats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RowId = table.Column<int>(type: "integer", nullable: false),
+                    SeatNumber = table.Column<int>(type: "integer", nullable: false),
+                    SeatTypeMultiplierId = table.Column<int>(type: "integer", nullable: false),
+                    IsOccupied = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Seats", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Seats_Rows_RowId",
+                        column: x => x.RowId,
+                        principalTable: "Rows",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Seats_SeatTypes_SeatTypeMultiplierId",
+                        column: x => x.SeatTypeMultiplierId,
+                        principalTable: "SeatTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "Unique_HallName",
@@ -198,9 +223,14 @@ namespace Theatre.Infrastructure.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Seats_HallId_RowNumber",
-                table: "Seats",
-                columns: new[] { "HallId", "RowNumber" });
+                name: "IX_Rows_HallId",
+                table: "Rows",
+                column: "HallId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rows_SectorId",
+                table: "Rows",
+                column: "SectorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Seats_RowId",
@@ -208,10 +238,20 @@ namespace Theatre.Infrastructure.Data.Migrations
                 column: "RowId");
 
             migrationBuilder.CreateIndex(
-                name: "Unique_Seat",
+                name: "IX_Seats_SeatTypeMultiplierId",
                 table: "Seats",
-                columns: new[] { "HallId", "SectorId", "RowNumber", "SeatNumber" },
+                column: "SeatTypeMultiplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SeatTypes_SeatType",
+                table: "SeatTypes",
+                column: "SeatType",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sectors_HallId",
+                table: "Sectors",
+                column: "HallId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_EventId",
@@ -272,13 +312,16 @@ namespace Theatre.Infrastructure.Data.Migrations
                 name: "Rows");
 
             migrationBuilder.DropTable(
+                name: "SeatTypes");
+
+            migrationBuilder.DropTable(
                 name: "Events");
 
             migrationBuilder.DropTable(
-                name: "Sectors");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Sectors");
 
             migrationBuilder.DropTable(
                 name: "Halls");

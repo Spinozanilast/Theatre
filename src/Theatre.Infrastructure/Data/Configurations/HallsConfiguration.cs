@@ -12,5 +12,14 @@ public class HallsConfiguration : IEntityTypeConfiguration<Hall>
             .HasIndex(h => h.HallName)
             .IsUnique()
             .HasDatabaseName("Unique_HallName");
+
+        builder
+            .Property(h => h.SchemeGridRowsCount)
+            .IsRequired();
+        
+        
+        builder
+            .Property(h => h.SchemeGridColumnsCount)
+            .IsRequired();
     }
 }

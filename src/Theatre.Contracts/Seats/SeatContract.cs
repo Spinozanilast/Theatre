@@ -1,5 +1,3 @@
-﻿using Theatre.Domain.Entities.Enumerations;
+﻿namespace Theatre.Contracts.Seats;
 
-namespace Theatre.Contracts.Seats;
-
-public record SeatContract(int HallId, int SectorId, int RowNumber, int SeatNumber, SeatType SeatType);
+public record SeatContract(int Id, int RowId, int SeatNumber, string SeatType, double PriceMultiplier, bool IsOccupied);

@@ -1,5 +1,4 @@
-﻿using Theatre.Domain.Entities.Enumerations;
-using Theatre.Domain.Entities.Special;
+﻿using Theatre.Domain.Entities.Special;
 
 namespace Theatre.Contracts.Events;
 

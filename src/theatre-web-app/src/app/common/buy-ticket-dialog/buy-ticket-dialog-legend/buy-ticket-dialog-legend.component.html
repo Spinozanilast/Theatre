@@ -1,0 +1,25 @@
+<div class="legend-container">
+    <div class="legend-container__seat-availability">
+        <div class="legend-container__seat-availability__legend">
+            @for (seatTypeDefinition of uniqueTypeDefinitions; track $index) {
+                <div class="seat {{ seatTypeDefinition.class }}"></div>
+            }
+            <h3>Свободно</h3>
+        </div>
+        <div class="legend-container__seat-availability__legend">
+            <div class="seat occupied-seat"></div>
+            <h3>Занято</h3>
+        </div>
+    </div>
+    <div class="legend-container__available-types">
+        <div class="legend-container__available-types__legend">
+            <h3>Доступны:</h3>
+            @for (seatTypeDefinition of uniqueTypeDefinitions; track $index) {
+                <div class="available-seat-type">
+                    <h4>{{ seatTypeDefinition.name }}</h4>
+                    <div class="seat {{ seatTypeDefinition.class }}"></div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

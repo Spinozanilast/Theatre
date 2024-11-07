@@ -1,0 +1,83 @@
+<div class="user-data-input">
+    <form action="" (ngSubmit)="onSubmit()" [formGroup]="userDataGroup">
+        <div class="dialog-input-container">
+            <label for="name">Имя:</label>
+            <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Имя"
+                formControlName="name"
+                required
+            />
+        </div>
+        <div class="dialog-input-container">
+            <label for="email"
+                >Электронная почта
+                <span>(на неё будет отправлен билет)</span>:</label
+            >
+            <input
+                id="email"
+                name="email"
+                type="email"
+                email="true"
+                placeholder="email@example.com"
+                formControlName="email"
+                required
+            />
+        </div>
+        <div class="dialog-input-container">
+            <label for="phone">Номер телефона:</label>
+            <input
+                id="phone"
+                name="phone"
+                type="text"
+                [prefix]="'+375 '"
+                mask="(00) 000-00-00"
+                [showMaskTyped]="true"
+                [validation]="true"
+                formControlName="phone"
+                required
+            />
+        </div>
+        @if (this.isPhoneNumberValidToVerify()) {
+            <div class="dialog-input-container">
+                <label for="phone-verify">Подтверждение номера телефона:</label>
+                <input
+                    class="centered-input"
+                    id="phone-verify"
+                    name="phone-verify"
+                    type="text"
+                    mask="000000"
+                    [showMaskTyped]="true"
+                    [validation]="true"
+                    required
+                    formControlName="verificationCode"
+                />
+            </div>
+            <div class="dialog-verify-container">
+                <button
+                    type="button"
+                    class="dialog-action-button"
+                    (click)="sendVerificationCode()"
+                >
+                    Отправить код
+                </button>
+                <button
+                    type="button"
+                    class="dialog-action-button"
+                    (click)="verifyPhone()"
+                >
+                    Проверить
+                </button>
+            </div>
+        }
+        <button
+            type="submit"
+            class="dialog-action-button"
+            [disabled]="!isPhoneNumberVerified"
+        >
+            Отправить
+        </button>
+    </form>
+</div>

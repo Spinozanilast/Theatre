@@ -3,6 +3,7 @@ export enum EventType {
     Commedy = 'Комедия',
     Ballet = 'Балет',
     Musical = 'Мюзикл',
+    Opera = 'Опера',
 }
 
 export interface EventCast {

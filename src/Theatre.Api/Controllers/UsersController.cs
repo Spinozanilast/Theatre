@@ -11,6 +11,7 @@ namespace Theatre.Api.Controllers;
 [Route("[controller]")]
 public class UsersController(IMediator mediator) : ControllerBase
 {
+    
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserContract))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -40,7 +41,7 @@ public class UsersController(IMediator mediator) : ControllerBase
         var getUserByIdQuery = new GetUserByIdQuery(userId);
         var result = await mediator.Send(getUserByIdQuery, cancellationToken);
         return result.Match<IActionResult>(
-            user => Ok(),
+            Ok,
             NotFound);
     }
 
@@ -52,7 +53,7 @@ public class UsersController(IMediator mediator) : ControllerBase
         var getUserByphoneNumberQuery = new GetUserByPhoneNumberQuery(phoneNumber);
         var result = await mediator.Send(getUserByphoneNumberQuery, cancellationToken);
         return result.Match<IActionResult>(
-            user => Ok(),
+            Ok,
             NotFound);
     }
 }

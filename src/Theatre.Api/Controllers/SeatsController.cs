@@ -71,6 +71,6 @@ public class SeatsController(IMediator mediator) : ControllerBase
     {
         var getSeatsByHallId = new GetSeatsByHallIdQuery(hallId);
         var seats = await mediator.Send(getSeatsByHallId);
-        return Ok(seats.Select(seat => seat.ToContract()).ToList());
+        return Ok(seats);
     }
 }

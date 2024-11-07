@@ -1,5 +1,4 @@
-﻿using ErrorOr;
-using Mediator;
+﻿using Mediator;
 using Microsoft.AspNetCore.Mvc;
 using Theatre.Application.Features.Sectors.Commands;
 using Theatre.Application.Features.Sectors.Queries;

@@ -1,3 +1,3 @@
 ﻿namespace Theatre.Contracts.Halls;
 
-public class HallContract(string Name, int seatsNum);
+public record HallContract(int HallId,string Name, int SeatsNum, int GridSchemeColumnsCount,int GridSchemeRowsCount);

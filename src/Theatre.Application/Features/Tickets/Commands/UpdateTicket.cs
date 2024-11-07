@@ -10,9 +10,6 @@ public record UpdateTicketCommand(
     Guid UserId,
     DateTime EndsAt,
     int HallId,
-    int SectorId,
-    int RowNumber,
-    int SeatNumber,
     decimal Price
 ): ICommand<ErrorOr<Success>>;
 
@@ -22,13 +19,13 @@ public class UpdateTicketCommandHandler(ITicketsRepository ticketsRepository)
     public async ValueTask<ErrorOr<Success>> Handle(UpdateTicketCommand request, CancellationToken cn = default)
     {
         var ticket = await ticketsRepository.GetByIdAsync(request.TicketId);
+        
         if (ticket is null)
         {
             return Error.NotFound(description: "Ticket not found");
         }
 
-        ticket.Update(request.EventId, request.UserId, request.EndsAt, request.HallId, request.SectorId,
-            request.RowNumber, request.SeatNumber, request.Price);
+        ticket.Update(request.EventId, request.UserId, request.EndsAt, request.HallId, request.Price);
 
         await ticketsRepository.UpdateAsync(ticket);
         return Result.Success;

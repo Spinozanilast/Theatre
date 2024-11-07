@@ -1,21 +1,22 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { EventsContainerComponent } from '@commom/events/events-container/events-container.component';
 import { HeaderComponent } from '@commom/header/header.component';
-import EventContract from '@data/event.interfaces';
-import EventsService from '@services/events/events.service.service';
+import { NavBarComponent } from '@commom/nav-bar/nav-bar.component';
+import Event from '@data/event.interfaces';
+import { EventsService } from '@data/services/events.service';
 
 @Component({
     selector: 'app-main-page',
     standalone: true,
-    imports: [EventsContainerComponent, HeaderComponent],
+    imports: [EventsContainerComponent, HeaderComponent, NavBarComponent],
     templateUrl: './main-page.component.html',
     styleUrl: './main-page.component.less',
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
     eventsService = inject(EventsService);
-    events: EventContract[] = [];
+    events: Event[] = [];
 
-    constructor() {
+    ngOnInit(): void {
         this.eventsService
             .getAllEvents()
             .subscribe((events) => (this.events = events));

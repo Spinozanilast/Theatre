@@ -1,4 +1,5 @@
-﻿using Mediator;
+﻿using System.Diagnostics.CodeAnalysis;
+using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Theatre.Application.Features.Halls.Commands;

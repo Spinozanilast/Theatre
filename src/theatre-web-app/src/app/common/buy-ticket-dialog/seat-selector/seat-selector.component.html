@@ -1,0 +1,69 @@
+<div class="dialog-body__view-scheme">
+    <div class="dialog-body__content-info">
+        <p>Зал - {{ event.hallId }}</p>
+        <p>
+            Стоимость стандартных мест -
+            {{ event.price }} BYN
+        </p>
+    </div>
+    <div class="scene-object">
+        <svg viewBox="0 0 255 55" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M126 1C1.00006 1 1 51 1 51H251C251 51 251 1 126 1Z"
+                id="scene-object-path"
+            />
+        </svg>
+        <h3 class="scene-object-title">Сцена</h3>
+    </div>
+    <div class="dialog-body__seats-scheme" [style]="getHallSchemeStyles()">
+        @for (
+            sector of groupedInSectorsSeats;
+            track sector.sectorId;
+            let sectorIdx = $index
+        ) {
+            <div class="sector-container">
+                <h3 class="sector-title">Сектор {{ sectorIdx + 1 }}</h3>
+                <div class="sector">
+                    @for (
+                        row of sector.rows;
+                        track row.rowId;
+                        let rowIdx = $index
+                    ) {
+                        <div class="row">
+                            <span class="row-title">
+                                {{ rowIdx + 1 }}
+                            </span>
+                            @for (seat of row.seats; track seat.seatId) {
+                                <div
+                                    [className]="
+                                        getSeatClassByType(
+                                            seat.seatTypeMultiplier.seatType,
+                                            seat.isOccupied
+                                        ).class
+                                    "
+                                    [ngClass]="{
+                                        'occupied-seat': seat.isOccupied,
+                                    }"
+                                    (click)="
+                                        onChooseSeat(
+                                            seat,
+                                            sectorIdx + 1,
+                                            rowIdx + 1
+                                        )
+                                    "
+                                >
+                                    <p>
+                                        {{ seat.seatNumber }}
+                                    </p>
+                                </div>
+                            }
+                            <span class="row-title">
+                                {{ rowIdx + 1 }}
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

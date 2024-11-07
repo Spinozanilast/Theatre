@@ -1,0 +1,137 @@
+// -----------------------------------------------------------------------------
+// ---------------------------------Scene-Info----------------------------------
+// -----------------------------------------------------------------------------
+
+.dialog-body__content-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0.5rem;
+
+    p {
+        color: var(--text-transparent);
+    }
+}
+
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// ---------------------------------Scene-Object--------------------------------
+// -----------------------------------------------------------------------------
+
+.dialog-body__view-scheme {
+    width: fit-content;
+}
+
+.scene-object {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-transparent);
+
+    svg {
+        -webkit-filter: drop-shadow(5px 5px 25px var(--accent));
+        filter: drop-shadow(5px 5px 25px var(--accent));
+    }
+
+    #scene-object-path {
+        fill: #ff0000;
+        fill-opacity: 0.12;
+    }
+}
+
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// ---------------------------------Seats-Scheme--------------------------------
+// -----------------------------------------------------------------------------
+
+.dialog-body__seats-scheme {
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+    .sector-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+
+        .sector-title {
+            font-size: 1rem;
+            color: var(--text-transparent);
+            text-align: center;
+        }
+    }
+
+    .sector {
+        background-color: #140f0f80;
+        border-radius: var(--standard-border-radius);
+        padding: 10px;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        margin: 0.5em;
+
+        .seat.standard-seat:hover {
+            cursor: pointer;
+            background-color: var(--primary);
+
+            p {
+                opacity: 0.8;
+            }
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+
+            &:hover {
+                box-shadow: 0px 0px 20px 5px var(--accent);
+
+                .row-title {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+.row-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// ---------------------------------Seats-Scheme-Utils--------------------------
+// -----------------------------------------------------------------------------
+
+.row-title {
+    opacity: 0.2;
+    font-size: 1.1rem;
+    color: var(--text-transparent);
+    text-align: center;
+    width: 1.5rem;
+    transition: opacity 0.1s linear;
+}
+
+.currently-occupied-seats {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    h2 {
+        font-size: 1.2rem;
+        color: var(--text-transparent);
+        text-align: center;
+    }
+}
+
+// -----------------------------------------------------------------------------

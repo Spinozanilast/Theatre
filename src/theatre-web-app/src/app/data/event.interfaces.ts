@@ -1,6 +1,7 @@
-import { EventCast, EventType } from './enums/event.enums';
+import { EventCast } from './enums/event.enums';
 
-export default interface EventContract {
+export default interface Event {
+    id: string;
     name: string;
     imageUrls: string[];
     description: string;
@@ -10,4 +11,9 @@ export default interface EventContract {
     price: number;
     eventCast: EventCast;
     eventState: boolean;
+}
+
+export interface EventType {
+    id: number;
+    name: string;
 }

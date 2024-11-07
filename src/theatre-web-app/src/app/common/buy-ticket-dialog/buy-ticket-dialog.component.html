@@ -1,38 +1,90 @@
-<div class="modal-overlay" (click)="onCancel()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-        <div class="dialog-header">
-            <div class="dialog-title">
-                Покупка билета на
-                <span class="event-title">{{ event.name }}</span>
+<div class="modal-overlay">
+    <buy-ticket-dialog-legend
+        [uniqueTypeDefinitions]="getSeatTypeDefinitionsByExistingTypes()"
+    ></buy-ticket-dialog-legend>
+
+    <main class="modal-main">
+        <div class="buy-page-switcher">
+            <div>
+                <label>
+                    <input
+                        type="radio"
+                        name="radio"
+                        [checked]="step === DialogStep.selectSeats"
+                        (change)="onChangeStep(DialogStep.selectSeats)"
+                    />
+                    <span>Выбрать места</span>
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        name="radio"
+                        [checked]="step === DialogStep.buyerData"
+                        (change)="onChangeStep(DialogStep.buyerData)"
+                        [disabled]="stepIdx < 1"
+                    />
+                    <span>Данные покупателя</span>
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        name="radio"
+                        disabled
+                        [checked]="step === DialogStep.payment"
+                        (change)="onChangeStep(DialogStep.payment)"
+                        [disabled]="stepIdx < 2"
+                    />
+                    <span>Оплата</span>
+                </label>
             </div>
-            <div class="dialog-close" (click)="onCancel()"></div>
         </div>
-        <div class="dialog-body">
-            <div class="dialog-body__content">
-                <div class="dialog-body__content-info">
-                    <p>Зал - {{ event.hallId }}</p>
-                    <p>Стоимость стандартных мест - {{ event.price }} BYN</p>
-                </div>
-                <div id="dialog-body__seats-scheme">
-                    <!-- <div class="dialog-body__seats-scheme-row">
-                    <div class="dialog-body__seats-scheme-row-item">
-                        <div class="dialog-body__seats-scheme-row-item-title">
-                            Hall
-                        </div>
-                        <div class="dialog-body__seats-scheme-row-item-value">
-                            {{ event.hall.name }}
-                        </div>
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            @if (step === DialogStep.selectSeats) {
+                <div class="dialog-header">
+                    <div class="dialog-title">
+                        Покупка билета на
+                        <span class="event-title">{{ event.name }}</span>
                     </div>
-                </div> -->
+                    <div class="dialog-close" (click)="onCancel()"></div>
                 </div>
-            </div>
-            <div class="dialog-actions-container">
-                <div class="buy-info-container">
-                    <button
-                        type="button"
-                        class="dialog-action-button"
-                        (click)="onBuyTicket()"
-                    >
+
+                <div class="dialog-body">
+                    <div class="dialog-body__content">
+                        <seat-selector
+                            [event]="event"
+                            [groupedInSectorsSeats]="groupedInSectorsSeats"
+                            [hallScheme]="hallScheme"
+                            (seatSelected)="onChooseSeat($event)"
+                        ></seat-selector>
+                    </div>
+                </div>
+            } @else if (step === DialogStep.buyerData) {
+                <div class="dialog-header">
+                    <div class="dialog-title">Ввод данных покупателя</div>
+                    <div class="dialog-close" (click)="onCancel()"></div>
+                </div>
+
+                <div class="dialog-body">
+                    <div class="dialog-body__content">
+                        <user-data-input
+                            (submit)="onUserDataSubmit($event)"
+                        ></user-data-input>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="dialog-actions-container">
+            <div class="buy-info-container">
+                <button
+                    type="button"
+                    class="dialog-action-button"
+                    (click)="onChangeByStep(true)"
+                    [style.box.shadow]="
+                        this.stepIdx === 0 ? 'inset 0 0 50px var(--accent)' : ''
+                    "
+                    [disabled]="this.occupiedSeats.length === 0"
+                >
+                    @if (this.step === DialogStep.payment) {
                         Купить билет
                         <div class="icon">
                             <span>
@@ -67,19 +119,73 @@
                                 </svg>
                             </span>
                         </div>
-                    </button>
-                    <div class="occupied-seats">
-                        <!--  -->
-                    </div>
-                </div>
-                <button
-                    type="button"
-                    class="dialog-action-button"
-                    (click)="onCancel()"
-                >
-                    Отмена
+                    } @else {
+                        Продолжить
+                    }
                 </button>
             </div>
+            <button
+                type="button"
+                class="dialog-action-button"
+                (click)="onCancel()"
+            >
+                Отмена
+            </button>
         </div>
-    </div>
+    </main>
+    @if (occupiedSeats.length !== 0) {
+        <div
+            @appearAnimation
+            class="currently-occupied-seats darker-background"
+        >
+            <div class="occupied-seats-wrapper">
+                <div class="dialog-header">
+                    <div class="dialog-title">Места для бронирования:</div>
+                </div>
+                <div class="occupied-seats-container">
+                    @for (
+                        occupiedSeat of occupiedSeats;
+                        track occupiedSeat.seat.seatId;
+                        let idx = $index
+                    ) {
+                        <div class="occupied-seat-container">
+                            <div
+                                [className]="
+                                    getSeatClassByType(
+                                        occupiedSeat.seat.seatTypeMultiplier
+                                            .seatType
+                                    ).class
+                                "
+                                [ngClass]="{ seat: true }"
+                            >
+                                <p class="occupid-seat-number">
+                                    {{ occupiedSeat.seat.seatNumber }}
+                                </p>
+                            </div>
+                            <div class="occupied-seat-location">
+                                <p class="occupied-seat-sector">
+                                    Сектор: {{ occupiedSeat.sectorNumber }}
+                                </p>
+                                <p class="occupied-seat-row">
+                                    Ряд: {{ occupiedSeat.rowNumber }}
+                                </p>
+                            </div>
+                        </div>
+                        @if (idx !== occupiedSeats.length - 1) {
+                            +
+                        }
+                    }
+                </div>
+            </div>
+            <hr />
+            <h2><span>Кол-во мест: </span>{{ occupiedSeats.length }}</h2>
+            <h2>
+                <span>Стоимость: </span>
+                {{
+                    mapOccupiedSeatsInfoToSeatContracts()
+                        | fullCostPipe: event.price
+                }}
+            </h2>
+        </div>
+    }
 </div>

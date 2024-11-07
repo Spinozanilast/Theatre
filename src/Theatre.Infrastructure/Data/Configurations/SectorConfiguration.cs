@@ -8,5 +8,10 @@ public class SectorConfiguration : IEntityTypeConfiguration<Sector>
 {
     public void Configure(EntityTypeBuilder<Sector> builder)
     {
+        builder.Property(s => s.RowsCount)
+            .IsRequired();
+
+        builder.Property(s => s.SeatsNum)
+            .IsRequired();
     }
 }

@@ -3,17 +3,14 @@ using Theatre.Domain.Entities.Special;
 
 namespace Theatre.Domain.Entities;
 
-public class Ticket : Entity, IUniqueSeatIndex<int>
+public class Ticket : Entity
 {
-    public Ticket(Guid id, Guid eventId, Guid userId, int hallId, int sectorId, int rowNumber, int seatNumber,
+    public Ticket(Guid id, Guid eventId, Guid userId, int hallId, int[] seatIds,
         decimal price, DateTime endsAt, DateTime startsAt, DateTime bookingTime) : base(id)
     {
         EventId = eventId;
         UserId = userId;
         HallId = hallId;
-        SectorId = sectorId;
-        RowNumber = rowNumber;
-        SeatNumber = seatNumber;
         Price = price;
         EndsAt = endsAt;
         StartsAt = startsAt;
@@ -26,10 +23,8 @@ public class Ticket : Entity, IUniqueSeatIndex<int>
     private User User { get; set; }
     public int HallId { get; set; }
     private Hall Hall { get; set; }
-    public int SectorId { get; set; }
-    private Sector Sector { get; set; }
-    public int RowNumber { get; set; }
-    public int SeatNumber { get; set; }
+    
+    public int[] SeatIds { get; set; }
     public decimal Price { get; set; }
     public DateTime StartsAt { get; set; }
     public DateTime EndsAt { get; set; }
@@ -43,16 +38,12 @@ public class Ticket : Entity, IUniqueSeatIndex<int>
 
     public bool IsExpired => DateTime.UtcNow > EndsAt;
 
-    public void Update(Guid eventId, Guid userId, DateTime endsAt, int hallId, int sectorId, int rowNumber,
-        int seatNumber, decimal price)
+    public void Update(Guid eventId, Guid userId, DateTime endsAt, int hallId, decimal price)
     {
         EventId = eventId;
         UserId = userId;
         EndsAt = endsAt;
         HallId = hallId;
-        SectorId = sectorId;
-        RowNumber = rowNumber;
-        SeatNumber = seatNumber;
         Price = price;
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Theatre.Domain.Common;
+﻿using Theatre.Domain.Common;
 
 namespace Theatre.Domain.Entities;
 

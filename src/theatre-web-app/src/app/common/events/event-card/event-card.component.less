@@ -72,8 +72,12 @@ span {
 }
 
 .event-card__header {
-    display: flex;
+    display: grid;
     justify-content: space-between;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
     align-items: center;
     background-color: var();
     padding: @element-padding;
@@ -90,10 +94,17 @@ span {
     .event-card__type {
         color: var(--text-transparent);
         font-family: 'Fira Sans';
-        font-size: 0.7rem;
         font-weight: 400;
         white-space: nowrap;
     }
+}
+
+.event-card__type {
+    font-size: 1rem;
+}
+
+.event-card__datetime {
+    font-size: 0.7rem;
 }
 
 .event-card__image {

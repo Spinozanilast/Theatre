@@ -59,7 +59,7 @@ public class EventsController(IMediator mediator) : ControllerBase
     {
         var getUserByIdQuery = new GetEventsByHallIdQuery(hallId);
         var events = await mediator.Send(getUserByIdQuery, cancellationToken);
-        return Ok(events.Select(eventEntity => eventEntity.ToResponse()).ToList());
+        return Ok(events.ToList());
     }
 
     [HttpGet]
@@ -69,6 +69,6 @@ public class EventsController(IMediator mediator) : ControllerBase
     {
         var getAllEventsQuery = new GetAllEventsQuery();
         var events = await mediator.Send(getAllEventsQuery, cancellationToken);
-        return Ok(events.Select(eventEntity => eventEntity.ToResponse()).ToList());
+        return Ok(events.ToList());
     }
 }

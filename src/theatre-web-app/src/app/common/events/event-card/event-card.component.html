@@ -1,6 +1,8 @@
 <div class="event-card">
     <div class="event-card__header">
-        <h3 class="event-card__type">{{ event.eventType }}</h3>
+        <h3 class="event-card__type">
+            {{ event.eventType.name | eventTypeLocalizer }}
+        </h3>
         <h2 class="event-card__title">{{ event.name }}</h2>
         <h3 class="event-card__datetime">
             {{ event.dateTime | date: 'mediumDate' }}

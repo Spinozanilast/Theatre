@@ -1,43 +1,35 @@
 ﻿using Theatre.Domain.Common;
-using Theatre.Domain.Entities.Enumerations;
 using Theatre.Domain.Entities.Special;
 
 namespace Theatre.Domain.Entities;
 
-public class Seat : AutoIncrementedEntity<int>, IUniqueSeatIndex<int>
-{
-    public Seat(
-        int hallId, int sectorId, int rowNumber, int seatNumber, SeatType seatType)
+    public class Seat : AutoIncrementedEntity<int>
     {
-        HallId = hallId;
-        SectorId = sectorId;
-        RowNumber = rowNumber;
-        SeatNumber = seatNumber;
-        SeatType = seatType;
+        public Seat(int rowId, int seatNumber, SeatTypeMultiplier seatTypeMultiplier, bool isOccupied = false)
+        {
+            RowId = rowId;
+            SeatNumber = seatNumber;
+            SeatTypeMultiplier = seatTypeMultiplier;
+            IsOccupied = isOccupied;
+        }
+
+        private Seat() { }
+
+        public int RowId { get; private set; }
+        public Row Row { get; set; }
+        public int SeatNumber { get; private set; }
+        public SeatTypeMultiplier SeatTypeMultiplier { get; private set; }
+        public bool IsOccupied { get; private set; }
+
+        public void Update(int rowId, int seatNumber, SeatTypeMultiplier seatType)
+        {
+            RowId = rowId;
+            SeatNumber = seatNumber;
+            SeatTypeMultiplier = seatType;
+        }
+
+        public void Occupy()
+        {
+            IsOccupied = true;
+        }
     }
-
-    public int HallId { get; private set; }
-    private Hall Hall { get; set; }
-    public int SectorId { get; private set; }
-    private Sector Sector { get; set; }
-
-    public int RowNumber { get; private set; }
-    public int SeatNumber { get; private set; }
-    public SeatType SeatType { get; private set; }
-    
-    public bool IsOccupied { get; private set; }
-
-    public void Update(int hallId, int sectorId, int rowNumber, int seatNumber, SeatType seatType)
-    {
-        HallId = hallId;
-        SectorId = sectorId;
-        RowNumber = rowNumber;
-        SeatNumber = seatNumber;
-        SeatType = seatType;
-    }
-
-    public void Occupy()
-    {
-        IsOccupied = true;
-    }
-}

@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { EventCardComponent } from '../event-card/event-card.component';
 import { BuyTicketDialogComponent } from '@commom/buy-ticket-dialog/buy-ticket-dialog.component';
-import EventContract from '@data/event.interfaces';
-import EventsService from '@services/events/events.service.service';
+import Event from '@data/event.interfaces';
 import EventCardModalModel from '@data/models/event-card-model.model';
+import { EventsService } from '@data/services/events.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'app-events-container',
@@ -11,18 +12,28 @@ import EventCardModalModel from '@data/models/event-card-model.model';
     imports: [EventCardComponent, BuyTicketDialogComponent],
     templateUrl: './events-container.component.html',
     styleUrl: './events-container.component.less',
+    animations: [
+        trigger('fadeIn', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('0.5s ease-in', style({ opacity: 1 })),
+            ]),
+        ]),
+    ],
 })
 export class EventsContainerComponent {
     eventsService = inject(EventsService);
-    events: EventContract[] = [];
-    selectedEvent: EventContract | undefined = undefined;
+    events: Event[] = [];
+    selectedEvent: Event | undefined = undefined;
 
     isModalVisible: boolean = false;
+    isLoading: boolean = true;
 
     constructor() {
-        this.eventsService
-            .getAllEvents()
-            .subscribe((events) => (this.events = events));
+        this.eventsService.getAllEvents().subscribe((events) => {
+            this.events = events;
+            this.isLoading = false;
+        });
     }
 
     onIsModalVisibleChange(modalData: EventCardModalModel) {

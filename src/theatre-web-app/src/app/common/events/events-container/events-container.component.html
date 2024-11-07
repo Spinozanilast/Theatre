@@ -1,11 +1,17 @@
-<div class="event-container">
-    @for (event of events; track event.name) {
-        <app-event-card
-            [event]="event"
-            (isModalVisibleChange)="onIsModalVisibleChange($event)"
-        ></app-event-card>
-    }
-</div>
+@if (isLoading) {
+    <div class="loading-container">
+        <div class="loader"></div>
+    </div>
+} @else {
+    <div class="event-container" [@fadeIn]="isLoading">
+        @for (event of events; track event.name) {
+            <app-event-card
+                [event]="event"
+                (isModalVisibleChange)="onIsModalVisibleChange($event)"
+            ></app-event-card>
+        }
+    </div>
+}
 
 @if (isModalVisible) {
     <app-buy-ticket-dialog

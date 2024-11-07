@@ -8,5 +8,9 @@ public class RowsConfiguration: IEntityTypeConfiguration<Row>
 {
     public void Configure(EntityTypeBuilder<Row> builder)
     {
+        builder
+            .HasOne(r => r.Sector)
+            .WithMany(s => s.Rows)
+            .HasForeignKey(r => r.SectorId);
     }
 }

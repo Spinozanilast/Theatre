@@ -1,10 +1,11 @@
-﻿using Theatre.Domain.Entities;
+﻿using Theatre.Domain.Containers;
+using Theatre.Domain.Entities;
 
 namespace Theatre.Application.Common.Interfaces;
 
 public interface ISeatsRepository
 {
-    Task<List<Seat>> GetSeatsByHallIdAsync(int hallId);
+    Task<List<SectorWithRows>> GetSeatsByHallIdAsync(int hallId);
     Task<List<Seat>> GetSeatsBySectorIdAsync(int sectorId);
     Task<Seat?> GetByIdAsync(int id);
     Task CreateAsync(Seat seatEntity);

@@ -9,7 +9,7 @@ public class TicketsConfiguration : IEntityTypeConfiguration<Ticket>
     public void Configure(EntityTypeBuilder<Ticket> builder)
     {
         builder
-            .HasIndex(t => new { t.EventId, t.UserId, t.HallId, t.SectorId, t.RowNumber, t.SeatNumber })
+            .HasIndex(t => new { t.EventId, t.UserId, t.HallId, t.SeatIds })
             .IsUnique()
             .HasDatabaseName("Unique_Ticket");
 
@@ -27,10 +27,5 @@ public class TicketsConfiguration : IEntityTypeConfiguration<Ticket>
             .ConfigureOneToOneRelationship<Ticket, Hall>(
                 nameof(Hall),
                 s => s.HallId);
-
-        builder
-            .ConfigureOneToOneRelationship<Ticket, Sector>(
-                nameof(Sector),
-                s => s.SectorId);
     }
 }
